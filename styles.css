@@ -969,6 +969,378 @@ body.cursor-hover .cursor-ring {
 }
 
 /* ============================================
+   Car Showcase — Scroll-Driven Cinematic
+   ============================================ */
+.showcase-section {
+    position: relative;
+    z-index: 3;
+    height: 300vh;
+    /* Creates scroll distance for the animation */
+    background: var(--bg-void);
+}
+
+.showcase-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main car image */
+.showcase-car-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.showcase-car-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.3);
+    opacity: 0;
+    filter: brightness(0.4) contrast(1.1);
+    transition: none;
+    will-change: transform, opacity, filter;
+}
+
+/* Detail close-up inset */
+.showcase-detail-wrapper {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    width: 280px;
+    height: 200px;
+    overflow: hidden;
+    z-index: 10;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: none;
+    will-change: opacity, transform;
+    border: 1px solid rgba(232, 168, 69, 0.2);
+}
+
+.showcase-detail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-border {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(232, 168, 69, 0.15);
+    pointer-events: none;
+}
+
+.detail-border::before {
+    content: 'DETAIL';
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    opacity: 0.7;
+}
+
+/* HUD Overlay for showcase */
+.showcase-hud {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    padding: 50px;
+}
+
+.shud-top-left {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: none;
+    will-change: opacity, transform;
+}
+
+.shud-label {
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+}
+
+.shud-line {
+    width: 60px;
+    height: 1px;
+    background: var(--border-accent);
+}
+
+.shud-center {
+    position: absolute;
+    bottom: 140px;
+    left: 50px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: none;
+    will-change: opacity, transform;
+}
+
+.shud-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 200;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    line-height: 1.1;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.8);
+}
+
+.shud-subtitle {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-top: 12px;
+    text-shadow: 0 1px 20px rgba(0, 0, 0, 0.8);
+}
+
+.shud-data-strip {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: none;
+    will-change: opacity, transform;
+}
+
+.shud-data-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.shud-data-label {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+}
+
+.shud-data-value {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 300;
+}
+
+.shud-data-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+/* Corner brackets */
+.shud-bracket {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    transition: none;
+    will-change: opacity;
+}
+
+.shud-bracket::before,
+.shud-bracket::after {
+    content: '';
+    position: absolute;
+    background: var(--accent);
+}
+
+.shud-bracket-tl {
+    top: 40px;
+    left: 40px;
+}
+
+.shud-bracket-tl::before {
+    width: 20px;
+    height: 1px;
+    top: 0;
+    left: 0;
+}
+
+.shud-bracket-tl::after {
+    width: 1px;
+    height: 20px;
+    top: 0;
+    left: 0;
+}
+
+.shud-bracket-tr {
+    top: 40px;
+    right: 40px;
+}
+
+.shud-bracket-tr::before {
+    width: 20px;
+    height: 1px;
+    top: 0;
+    right: 0;
+}
+
+.shud-bracket-tr::after {
+    width: 1px;
+    height: 20px;
+    top: 0;
+    right: 0;
+}
+
+.shud-bracket-bl {
+    bottom: 40px;
+    left: 40px;
+}
+
+.shud-bracket-bl::before {
+    width: 20px;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+}
+
+.shud-bracket-bl::after {
+    width: 1px;
+    height: 20px;
+    bottom: 0;
+    left: 0;
+}
+
+.shud-bracket-br {
+    bottom: 40px;
+    right: 40px;
+}
+
+.shud-bracket-br::before {
+    width: 20px;
+    height: 1px;
+    bottom: 0;
+    right: 0;
+}
+
+.shud-bracket-br::after {
+    width: 1px;
+    height: 20px;
+    bottom: 0;
+    right: 0;
+}
+
+/* Progress bar */
+.showcase-progress {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 20;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.showcase-progress-bar {
+    width: 100%;
+    height: 0%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: height 0.05s linear;
+    box-shadow: 0 0 8px var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .showcase-section {
+        height: 200vh;
+    }
+
+    .showcase-hud {
+        padding: 24px;
+    }
+
+    .shud-top-left {
+        top: 24px;
+        left: 24px;
+    }
+
+    .shud-center {
+        bottom: 120px;
+        left: 24px;
+    }
+
+    .shud-title {
+        font-size: 1.8rem;
+    }
+
+    .shud-data-strip {
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .shud-data-divider {
+        display: none;
+    }
+
+    .showcase-detail-wrapper {
+        width: 160px;
+        height: 120px;
+        bottom: 180px;
+        right: 24px;
+    }
+
+    .showcase-progress {
+        right: 16px;
+    }
+
+    .shud-bracket-tl {
+        top: 16px;
+        left: 16px;
+    }
+
+    .shud-bracket-tr {
+        top: 16px;
+        right: 16px;
+    }
+
+    .shud-bracket-bl {
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .shud-bracket-br {
+        bottom: 16px;
+        right: 16px;
+    }
+}
+
+/* ============================================
    Services Section
    ============================================ */
 .services-section {
