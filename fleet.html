@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Wraps — EMWRAPS</title>
+    <meta name="description"
+        content="Transform your fleet into mobile billboards with EMWRAPS commercial vehicle wraps. Full fleet branding, partial wraps, and custom designs for vans, trucks, and cars.">
+    <meta name="keywords"
+        content="fleet wraps, commercial vehicle wraps, van wraps, truck wraps, fleet branding, vehicle graphics, business wraps">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fleet.css">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Scanline -->
+    <div class="scanline"></div>
+
+    <!-- Vignette -->
+    <div class="vignette"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">EMWRAPS</span>
+                <span class="logo-bracket">]</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link"><span class="nav-index">01</span>Home</a></li>
+                <li><a href="#fleet-hero" class="nav-link active" data-section="fleet-hero"><span
+                            class="nav-index">02</span>Fleet</a></li>
+                <li><a href="#fleet-showcase" class="nav-link" data-section="fleet-showcase"><span
+                            class="nav-index">03</span>Showcase</a></li>
+                <li><a href="#fleet-benefits" class="nav-link" data-section="fleet-benefits"><span
+                            class="nav-index">04</span>Benefits</a></li>
+                <li><a href="#fleet-packages" class="nav-link" data-section="fleet-packages"><span
+                            class="nav-index">05</span>Packages</a></li>
+                <li><a href="#fleet-faq" class="nav-link" data-section="fleet-faq"><span class="nav-index">06</span>FAQ
+                    </a>
+                </li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta">
+                <span class="cta-dot"></span>
+                Get a Quote
+            </a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-links">
+            <li><a href="index.html" class="mobile-link"><span class="mobile-index">01</span>Home</a></li>
+            <li><a href="#fleet-hero" class="mobile-link"><span class="mobile-index">02</span>Fleet</a></li>
+            <li><a href="#fleet-showcase" class="mobile-link"><span class="mobile-index">03</span>Showcase</a></li>
+            <li><a href="#fleet-benefits" class="mobile-link"><span class="mobile-index">04</span>Benefits</a></li>
+            <li><a href="#fleet-packages" class="mobile-link"><span class="mobile-index">05</span>Packages</a></li>
+            <li><a href="#fleet-faq" class="mobile-link"><span class="mobile-index">06</span>FAQ</a></li>
+        </ul>
+    </div>
+
+    <!-- Fleet Hero Section -->
+    <section id="fleet-hero" class="section hero-section fleet-hero-section">
+        <div class="hero-content">
+            <div class="hero-tag" data-animate="reveal">
+                <span class="tag-line"></span>
+                <span class="tag-text mono">COMMERCIAL FLEET WRAPS</span>
+                <span class="tag-line"></span>
+            </div>
+            <h1 class="hero-title" data-animate="reveal" data-delay="200">
+                <span class="title-line"><span class="title-word" data-animate="word">Your</span> <span
+                        class="title-word accent" data-animate="word">Fleet,</span></span>
+                <span class="title-line"><span class="title-word" data-animate="word">Your</span> <span
+                        class="title-word accent" data-animate="word">Brand</span></span>
+                <span class="title-line"><span class="title-word" data-animate="word">Everywhere</span></span>
+            </h1>
+            <p class="hero-subtitle" data-animate="reveal" data-delay="600">
+                Turn every vehicle in your fleet into a rolling billboard. Professional-grade vinyl wraps that build
+                brand recognition, generate leads, and protect your vehicles — all while on the move.
+            </p>
+            <div class="hero-actions" data-animate="reveal" data-delay="800">
+                <a href="index.html#contact" class="btn btn-primary">
+                    <span class="btn-text">Wrap Your Fleet</span>
+                    <span class="btn-arrow">→</span>
+                    <span class="btn-bg"></span>
+                </a>
+                <a href="#fleet-showcase" class="btn btn-ghost">
+                    <span class="btn-text">See Our Work</span>
+                    <span class="btn-arrow">↓</span>
+                </a>
+            </div>
+            <!-- Fleet Stats -->
+            <div class="telemetry" data-animate="reveal" data-delay="1000">
+                <div class="telemetry-item">
+                    <span class="tele-label mono">IMPRESSIONS</span>
+                    <span class="tele-value" data-count="70000">0</span>
+                    <span class="tele-suffix">/DAY</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">COST PER</span>
+                    <span class="tele-value" data-count="4">0</span>
+                    <span class="tele-suffix">¢/1K</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">DURABILITY</span>
+                    <span class="tele-value" data-count="7">0</span>
+                    <span class="tele-suffix">YRS</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">ROI</span>
+                    <span class="tele-value" data-count="3400">0</span>
+                    <span class="tele-suffix">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" data-animate="reveal" data-delay="1200">
+            <div class="scroll-line">
+                <div class="scroll-dot"></div>
+            </div>
+            <span class="mono">SCROLL</span>
+        </div>
+    </section>
+
+    <!-- Van Showcase — Scroll-Driven Cinematic Reveal -->
+    <section id="fleet-showcase" class="showcase-section section">
+        <div class="showcase-sticky">
+            <!-- Main van image -->
+            <div class="showcase-car-wrapper">
+                <img src="img/fleet_wrap/fleet_van_main.jpg"
+                    alt="Commercial Fleet Van Wrap - United Signature by EMWRAPS" class="showcase-car-img"
+                    id="showcase-car">
+            </div>
+            <!-- Detail close-up -->
+            <div class="showcase-detail-wrapper" id="showcase-detail">
+                <img src="img/fleet_wrap/fleet_van_detail.jpg" alt="Fleet Van Wrap Detail - Vinyl Application Close-up"
+                    class="showcase-detail-img">
+                <div class="detail-border"></div>
+            </div>
+            <!-- HUD data overlays -->
+            <div class="showcase-hud" id="showcase-hud">
+                <div class="shud-top-left">
+                    <div class="shud-label mono">FEATURED PROJECT</div>
+                    <div class="shud-line"></div>
+                </div>
+                <div class="shud-center">
+                    <div class="shud-title-wrap">
+                        <h2 class="shud-title" id="shud-title">United Signature</h2>
+                        <div class="shud-subtitle mono" id="shud-subtitle">COMMERCIAL FLEET WRAP — FULL VAN</div>
+                    </div>
+                </div>
+                <div class="shud-data-strip" id="shud-data">
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">MATERIAL</span>
+                        <span class="shud-data-value">3M IJ180Cv3</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">VEHICLE</span>
+                        <span class="shud-data-value">Ford Transit</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">COVERAGE</span>
+                        <span class="shud-data-value">Full Wrap</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">FLEET SIZE</span>
+                        <span class="shud-data-value">Multi-Vehicle</span>
+                    </div>
+                </div>
+                <!-- Corner brackets -->
+                <div class="shud-bracket shud-bracket-tl"></div>
+                <div class="shud-bracket shud-bracket-tr"></div>
+                <div class="shud-bracket shud-bracket-bl"></div>
+                <div class="shud-bracket shud-bracket-br"></div>
+            </div>
+            <!-- Progress indicator -->
+            <div class="showcase-progress">
+                <div class="showcase-progress-bar" id="showcase-progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="fleet-benefits" class="section fleet-benefits-section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <div class="section-header-top">
+                    <span class="section-index mono">03</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">WHY FLEET WRAPS</span>
+                </div>
+                <h2 class="section-title">Mobile <span class="accent">Marketing</span></h2>
+                <p class="section-desc">Your vehicles are already on the road — make every mile count for your brand.
+                </p>
+            </div>
+            <div class="fleet-benefits-grid">
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="0">
+                    <div class="card-index mono">01</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="6" y="20" width="52" height="28" rx="4" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M16 20V14a4 4 0 014-4h24a4 4 0 014 4v6" stroke="currentColor" stroke-width="1.5" />
+                            <circle cx="32" cy="34" r="8" stroke="currentColor" stroke-width="1" opacity="0.5" />
+                            <path d="M28 34l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Brand Visibility</h3>
+                    <p class="fleet-benefit-desc">A single wrapped vehicle generates 30,000–70,000 daily impressions.
+                        Your brand is seen by thousands of potential customers every day.</p>
+                </div>
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="100">
+                    <div class="card-index mono">02</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 8L10 18v16c0 14 10 22 22 26 12-4 22-12 22-26V18L32 8z" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M22 34l8 8 12-16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Paint Protection</h3>
+                    <p class="fleet-benefit-desc">Vinyl wraps act as a protective layer, shielding your fleet's paint
+                        from road debris, sun damage, and minor scratches — preserving resale value.</p>
+                </div>
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="200">
+                    <div class="card-index mono">03</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="20" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M22 32h20M32 22v20" stroke="currentColor" stroke-width="0.75" opacity="0.3" />
+                            <path d="M32 18v4M32 42v4M18 32h4M42 32h4" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <circle cx="32" cy="32" r="6" stroke="currentColor" stroke-width="1" opacity="0.5" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Targeted Reach</h3>
+                    <p class="fleet-benefit-desc">Unlike static ads, fleet wraps reach people in your exact service
+                        area.
+                        Your wrapped vehicles work where your customers live and work.</p>
+                </div>
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="300">
+                    <div class="card-index mono">04</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M12 44l10-16 10 8 10-20 10 12" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 52h40" stroke="currentColor" stroke-width="1" opacity="0.3" />
+                            <path d="M12 44h40" stroke="currentColor" stroke-width="0.5" opacity="0.15" />
+                            <path d="M12 36h40" stroke="currentColor" stroke-width="0.5" opacity="0.15" />
+                            <path d="M12 28h40" stroke="currentColor" stroke-width="0.5" opacity="0.15" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Lowest Cost Per Impression</h3>
+                    <p class="fleet-benefit-desc">At $0.04 per 1,000 impressions, fleet wraps are the most
+                        cost-effective
+                        form of advertising — outperforming billboards, radio, and digital ads.</p>
+                </div>
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="400">
+                    <div class="card-index mono">05</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="10" y="10" width="44" height="44" rx="4" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M10 24h44" stroke="currentColor" stroke-width="1" opacity="0.3" />
+                            <path d="M24 24v30" stroke="currentColor" stroke-width="1" opacity="0.3" />
+                            <rect x="28" y="30" width="20" height="8" rx="1" stroke="currentColor" stroke-width="1"
+                                opacity="0.5" />
+                            <rect x="28" y="42" width="14" height="8" rx="1" stroke="currentColor" stroke-width="1"
+                                opacity="0.5" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Professional Image</h3>
+                    <p class="fleet-benefit-desc">A uniformly branded fleet projects professionalism and
+                        trustworthiness.
+                        Customers are 15x more likely to remember your brand from a vehicle wrap.</p>
+                </div>
+                <div class="fleet-benefit-card" data-animate="reveal" data-delay="500">
+                    <div class="card-index mono">06</div>
+                    <div class="card-line"></div>
+                    <div class="fleet-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M20 48V16l24 16-24 16z" stroke="currentColor" stroke-width="1.5"
+                                stroke-linejoin="round" />
+                            <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="1" opacity="0.3" />
+                            <circle cx="32" cy="32" r="26" stroke="currentColor" stroke-width="0.5" opacity="0.15" />
+                        </svg>
+                    </div>
+                    <h3 class="fleet-benefit-title">Non-Stop Advertising</h3>
+                    <p class="fleet-benefit-desc">Fleet wraps work 24/7 — in traffic, parked at job sites, or in your
+                        driveway. No recurring monthly costs like traditional advertising methods.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="fleet-packages" class="section fleet-packages-section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <div class="section-header-top">
+                    <span class="section-index mono">04</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">WRAP OPTIONS</span>
+                </div>
+                <h2 class="section-title">Fleet <span class="accent">Packages</span></h2>
+                <p class="section-desc">From spot graphics to full coverage — we scale with your brand and budget.</p>
+            </div>
+            <div class="fleet-packages-grid">
+                <div class="fleet-package-card" data-animate="reveal" data-delay="0">
+                    <div class="fleet-package-tier mono">STARTER</div>
+                    <div class="fleet-package-name">Spot Graphics</div>
+                    <div class="fleet-package-desc">Logo and essential info — clean and professional.</div>
+                    <ul class="fleet-package-features">
+                        <li><span class="mono fleet-check">✓</span> Logo placement (both sides)</li>
+                        <li><span class="mono fleet-check">✓</span> Contact information</li>
+                        <li><span class="mono fleet-check">✓</span> Website & social handles</li>
+                        <li><span class="mono fleet-check">✓</span> Brand color matching</li>
+                        <li><span class="mono fleet-check">✓</span> 5–7 year vinyl</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+                <div class="fleet-package-card fleet-package-featured" data-animate="reveal" data-delay="150">
+                    <div class="fleet-package-badge mono">★ BEST VALUE</div>
+                    <div class="fleet-package-tier mono">PROFESSIONAL</div>
+                    <div class="fleet-package-name">Partial Wrap</div>
+                    <div class="fleet-package-desc">Maximum impact with strategic coverage — the sweet spot for ROI.
+                    </div>
+                    <ul class="fleet-package-features">
+                        <li><span class="mono fleet-check">✓</span> Side panels (both)</li>
+                        <li><span class="mono fleet-check">✓</span> Rear door coverage</li>
+                        <li><span class="mono fleet-check">✓</span> Custom design & layout</li>
+                        <li><span class="mono fleet-check">✓</span> High-res printed graphics</li>
+                        <li><span class="mono fleet-check">✓</span> Laminated for UV protection</li>
+                        <li><span class="mono fleet-check">✓</span> Fleet consistency guarantee</li>
+                        <li><span class="mono fleet-check">✓</span> 5–7 year durability</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-primary btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
+                    </a>
+                </div>
+                <div class="fleet-package-card" data-animate="reveal" data-delay="300">
+                    <div class="fleet-package-tier mono">ENTERPRISE</div>
+                    <div class="fleet-package-name">Full Wrap</div>
+                    <div class="fleet-package-desc">Complete transformation — every surface becomes your brand canvas.
+                    </div>
+                    <ul class="fleet-package-features">
+                        <li><span class="mono fleet-check">✓</span> Everything in Professional</li>
+                        <li><span class="mono fleet-check">✓</span> Full hood & roof</li>
+                        <li><span class="mono fleet-check">✓</span> Front & rear bumpers</li>
+                        <li><span class="mono fleet-check">✓</span> Window perforated vinyl</li>
+                        <li><span class="mono fleet-check">✓</span> Custom design from scratch</li>
+                        <li><span class="mono fleet-check">✓</span> Fleet rollout management</li>
+                        <li><span class="mono fleet-check">✓</span> Priority scheduling</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="fleet-faq" class="section fleet-faq-section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <div class="section-header-top">
+                    <span class="section-index mono">05</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">QUESTIONS</span>
+                </div>
+                <h2 class="section-title">Frequently <span class="accent">Asked</span></h2>
+            </div>
+            <div class="fleet-faq-list">
+                <div class="fleet-faq-item" data-animate="reveal" data-delay="0">
+                    <button class="fleet-faq-question" aria-expanded="false">
+                        <span>How long do fleet wraps last?</span>
+                        <span class="fleet-faq-icon mono">+</span>
+                    </button>
+                    <div class="fleet-faq-answer">
+                        <p>Using premium 3M and Avery Dennison materials, our fleet wraps typically last 5–7 years.
+                            Laminated prints resist UV fading, scratches, and weather damage. We also offer extended
+                            warranty options for multi-vehicle fleets.</p>
+                    </div>
+                </div>
+                <div class="fleet-faq-item" data-animate="reveal" data-delay="100">
+                    <button class="fleet-faq-question" aria-expanded="false">
+                        <span>Can wraps be removed without damaging the paint?</span>
+                        <span class="fleet-faq-icon mono">+</span>
+                    </button>
+                    <div class="fleet-faq-answer">
+                        <p>Absolutely. Professional-grade vinyl wraps are designed for clean removal. When your branding
+                            changes or a lease ends, the wrap peels off cleanly, revealing the original paint in
+                            protected condition underneath.</p>
+                    </div>
+                </div>
+                <div class="fleet-faq-item" data-animate="reveal" data-delay="200">
+                    <button class="fleet-faq-question" aria-expanded="false">
+                        <span>How long does it take to wrap a fleet vehicle?</span>
+                        <span class="fleet-faq-icon mono">+</span>
+                    </button>
+                    <div class="fleet-faq-answer">
+                        <p>Spot graphics take 1 day. Partial wraps require 2–3 days. Full vehicle wraps take 3–5 days
+                            depending on vehicle size and complexity. We coordinate scheduling to minimize fleet
+                            downtime
+                            and can stagger installations.</p>
+                    </div>
+                </div>
+                <div class="fleet-faq-item" data-animate="reveal" data-delay="300">
+                    <button class="fleet-faq-question" aria-expanded="false">
+                        <span>Do you handle design and artwork?</span>
+                        <span class="fleet-faq-icon mono">+</span>
+                    </button>
+                    <div class="fleet-faq-answer">
+                        <p>Yes! Our in-house design team creates custom fleet wrap designs from concept to completion.
+                            We
+                            work with your brand guidelines, provide digital mockups for approval, and ensure
+                            consistency
+                            across your entire fleet.</p>
+                    </div>
+                </div>
+                <div class="fleet-faq-item" data-animate="reveal" data-delay="400">
+                    <button class="fleet-faq-question" aria-expanded="false">
+                        <span>Do you offer fleet discounts?</span>
+                        <span class="fleet-faq-icon mono">+</span>
+                    </button>
+                    <div class="fleet-faq-answer">
+                        <p>Yes — we offer volume pricing for fleets of 3+ vehicles. The more vehicles in your fleet, the
+                            better the per-unit pricing. We also offer ongoing maintenance packages and replacement
+                            programs for long-term fleet accounts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section fleet-cta-section">
+        <div class="container">
+            <div class="fleet-cta-content" data-animate="reveal">
+                <h2 class="section-title">Ready To <span class="accent">Brand?</span></h2>
+                <p class="section-desc">Every mile without a wrap is a missed advertising opportunity. Get a free fleet
+                    consultation and turn your vehicles into your best marketing investment.</p>
+                <div class="fleet-cta-actions">
+                    <a href="index.html#contact" class="btn btn-primary">
+                        <span class="btn-text">Schedule Consultation</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
+                    </a>
+                    <a href="tel:2063835328" class="btn btn-ghost">
+                        <span class="btn-text">(206)-383-5328</span>
+                        <span class="btn-arrow">☎</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <span class="logo-bracket">[</span>
+                        <span class="logo-text">EMWRAPS</span>
+                        <span class="logo-bracket">]</span>
+                    </a>
+                    <p class="footer-tagline">Transforming vehicles into masterpieces since 2011.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">SERVICES</h4>
+                    <ul>
+                        <li><a href="index.html#services">Vinyl Wraps</a></li>
+                        <li><a href="ppf.html">Paint Protection</a></li>
+                        <li><a href="index.html#services">Itasha</a></li>
+                        <li><a href="fleet.html">Fleet Wraps</a></li>
+                        <li><a href="index.html#services">Ceramic Coating</a></li>
+                        <li><a href="index.html#services">Aftermarket Installs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">COMPANY</h4>
+                    <ul>
+                        <li><a href="index.html">About Us</a></li>
+                        <li><a href="index.html#gallery">Portfolio</a></li>
+                        <li><a href="index.html#process">Our Process</a></li>
+                        <li><a href="index.html#testimonials">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">HOURS</h4>
+                    <ul>
+                        <li>Mon - Fri: 11AM - 6PM</li>
+                        <li>Sat & Sun: Appointment Only</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="mono">&copy; 2026 EMWRAPS. ALL RIGHTS RESERVED.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="mono">PRIVACY</a>
+                    <a href="#" class="mono">TERMS</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="fleet.js"></script>
+</body>
+
+</html>
