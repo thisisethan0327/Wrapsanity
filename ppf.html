@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Protection Film — EMWRAPS</title>
+    <meta name="description"
+        content="EMWRAPS Paint Protection Film (PPF) - Invisible shield for your vehicle. Self-healing, high-gloss, and 10-year warranty.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
+
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+    <div class="scanline"></div>
+    <div class="vignette"></div>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-hud-top">
+                <span class="hud-label">SYS.INIT</span>
+                <span class="hud-data blink">▮</span>
+            </div>
+            <div class="loader-logo-wrap">
+                <div class="loader-logo">
+                    <img src="img/logo/emw_logo_full.png" alt="EMWRAPS" class="loader-logo-img">
+                </div>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-bar-track">
+                    <div class="loader-bar-fill" id="loader-fill"></div>
+                </div>
+                <div class="loader-percent" id="loader-percent">0%</div>
+            </div>
+            <div class="loader-hud-bottom">
+                <span class="hud-coord">47.6062° N</span>
+                <span class="hud-divider">|</span>
+                <span class="hud-coord">122.3321° W</span>
+                <span class="hud-divider">|</span>
+                <span class="hud-label mono">LOADING PPF MODULE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div class="hud-overlay">
+        <div class="hud-corner hud-tl">
+            <div class="hud-line"></div>
+            <span class="hud-text">EMWRAPS™</span>
+            <span class="hud-subtext">PPF DIVISION</span>
+        </div>
+        <div class="hud-corner hud-tr">
+            <span class="hud-text" id="hud-time">00:00:00</span>
+            <span class="hud-subtext">REC ●</span>
+            <div class="hud-line"></div>
+        </div>
+        <div class="hud-corner hud-bl">
+            <div class="hud-line"></div>
+            <span class="hud-subtext" id="hud-coords">47.6062° N 122.3321° W</span>
+        </div>
+        <div class="hud-corner hud-br">
+            <span class="hud-subtext" id="hud-fps">60 FPS</span>
+            <div class="hud-line"></div>
+        </div>
+        <div class="hud-crosshair" id="hud-crosshair">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">EMWRAPS</span>
+                <span class="logo-bracket">]</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link"><span class="nav-index">01</span>Home</a></li>
+                <li><a href="index.html#services" class="nav-link"><span class="nav-index">02</span>Services</a></li>
+                <li><a href="index.html#gallery" class="nav-link"><span class="nav-index">03</span>Gallery</a></li>
+                <li><a href="index.html#contact" class="nav-link"><span class="nav-index">06</span>Contact</a></li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta">
+                <span class="cta-dot"></span>
+                Get a Quote
+            </a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-links">
+            <li><a href="index.html" class="mobile-link"><span class="mobile-index">01</span>Home</a></li>
+            <li><a href="index.html#services" class="mobile-link"><span class="mobile-index">02</span>Services</a></li>
+            <li><a href="index.html#contact" class="mobile-link"><span class="mobile-index">06</span>Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Spacer for sticky nav -->
+    <div style="height: 100px;"></div>
+
+    <!-- Car Showcase Section (Moved here) -->
+    <section id="showcase" class="showcase-section">
+        <div class="showcase-sticky">
+            <!-- Main car image -->
+            <div class="showcase-car-wrapper">
+                <img src="img/ppf/sf90XX/emwraps_1759420800_3734346907021267675_5673697168.jpg"
+                    alt="Ferrari SF90 XX - Mint Green PPF by EMWRAPS" class="showcase-car-img" id="showcase-car">
+            </div>
+            <!-- Detail close-up -->
+            <div class="showcase-detail-wrapper" id="showcase-detail">
+                <img src="img/ppf/sf90XX/emwraps_1759420800_3734346907021274444_5673697168.jpg"
+                    alt="Ferrari SF90 XX Detail - PPF Close-up" class="showcase-detail-img">
+                <div class="detail-border"></div>
+            </div>
+            <!-- HUD data overlays -->
+            <div class="showcase-hud" id="showcase-hud">
+                <div class="shud-top-left">
+                    <div class="shud-label mono">FEATURED PROJECT</div>
+                    <div class="shud-line"></div>
+                </div>
+                <div class="shud-center">
+                    <div class="shud-title-wrap">
+                        <h2 class="shud-title" id="shud-title">Ferrari SF90 XX</h2>
+                        <div class="shud-subtitle mono" id="shud-subtitle">PAINT PROTECTION FILM — FULL BODY</div>
+                    </div>
+                </div>
+                <div class="shud-data-strip" id="shud-data">
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">MATERIAL</span>
+                        <span class="shud-data-value">XPEL Ultimate Plus</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">COVERAGE</span>
+                        <span class="shud-data-value">Full Body + Wheels</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">FINISH</span>
+                        <span class="shud-data-value">Gloss Mint Green</span>
+                    </div>
+                    <div class="shud-data-divider"></div>
+                    <div class="shud-data-item">
+                        <span class="shud-data-label mono">WARRANTY</span>
+                        <span class="shud-data-value">10 Years</span>
+                    </div>
+                </div>
+                <!-- Corner brackets -->
+                <div class="shud-bracket shud-bracket-tl"></div>
+                <div class="shud-bracket shud-bracket-tr"></div>
+                <div class="shud-bracket shud-bracket-bl"></div>
+                <div class="shud-bracket shud-bracket-br"></div>
+            </div>
+            <!-- Progress indicator -->
+            <div class="showcase-progress">
+                <div class="showcase-progress-bar" id="showcase-progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional PPF Info Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <h2 class="section-title">Invisible <span class="accent">Protection</span></h2>
+                <p class="section-desc">Keep your vehicle looking showroom new with our premium Paint Protection Film
+                    packages.</p>
+            </div>
+            <div style="text-align: center; margin-bottom: 80px;">
+                <a href="index.html#contact" class="btn btn-primary">
+                    <span class="btn-text">Get Protected</span>
+                    <span class="btn-arrow">→</span>
+                    <span class="btn-bg"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="mono">&copy; 2026 EMWRAPS. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
