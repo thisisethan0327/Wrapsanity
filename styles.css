@@ -974,8 +974,8 @@ body.cursor-hover .cursor-ring {
 .showcase-section {
     position: relative;
     z-index: 3;
-    height: 300vh;
-    /* Creates scroll distance for the animation */
+    height: 220vh;
+    /* Reduced for snappier hero → car transition */
     background: var(--bg-void);
 }
 
@@ -1004,9 +1004,9 @@ body.cursor-hover .cursor-ring {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.3);
-    opacity: 0;
-    filter: brightness(0.4) contrast(1.1);
+    transform: scale(1.15);
+    opacity: 0.15;
+    filter: brightness(0.5) contrast(1.1);
     transition: none;
     will-change: transform, opacity, filter;
 }
@@ -1275,7 +1275,7 @@ body.cursor-hover .cursor-ring {
 /* Responsive */
 @media (max-width: 768px) {
     .showcase-section {
-        height: 200vh;
+        height: 180vh;
     }
 
     .showcase-hud {

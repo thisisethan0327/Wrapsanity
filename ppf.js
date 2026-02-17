@@ -141,21 +141,23 @@ animEls.forEach(el => revealObs.observe(el));
             progressBar.style.height = (progress * 100) + '%';
         }
 
-        // Phase 1: Car reveal (0% - 40%)
-        const carProgress = clamp(progress / 0.4, 0, 1);
+        // Phase 1: Car reveal (0% - 25%) — starts partially visible, no black gap
+        const carProgress = clamp(progress / 0.25, 0, 1);
         const carEased = easeOutCubic(carProgress);
 
         if (carImg) {
-            const scale = 1.3 - (0.3 * carEased);
-            const opacity = carEased;
-            const brightness = 0.4 + (0.4 * carEased);
+            const scale = 1.15 - (0.15 * carEased);
+            // Start at 0.15 opacity so there's never a fully black screen
+            const opacity = 0.15 + (0.85 * carEased);
+            // Brightness starts higher for a softer intro
+            const brightness = 0.5 + (0.35 * carEased);
             carImg.style.transform = `scale(${scale})`;
             carImg.style.opacity = opacity;
             carImg.style.filter = `brightness(${brightness}) contrast(1.1)`;
         }
 
-        // Phase 2: HUD elements (30% - 60%)
-        const hudProgress = clamp((progress - 0.3) / 0.3, 0, 1);
+        // Phase 2: HUD elements (20% - 45%)
+        const hudProgress = clamp((progress - 0.2) / 0.25, 0, 1);
         const hudEased = easeOutCubic(hudProgress);
 
         if (topLeft) {
@@ -163,7 +165,7 @@ animEls.forEach(el => revealObs.observe(el));
             topLeft.style.transform = `translateX(${-20 * (1 - hudEased)}px)`;
         }
 
-        const titleProgress = clamp((progress - 0.35) / 0.3, 0, 1);
+        const titleProgress = clamp((progress - 0.25) / 0.25, 0, 1);
         const titleEased = easeOutCubic(titleProgress);
 
         if (center) {
@@ -171,13 +173,13 @@ animEls.forEach(el => revealObs.observe(el));
             center.style.transform = `translateY(${30 * (1 - titleEased)}px)`;
         }
 
-        const bracketProgress = clamp((progress - 0.4) / 0.25, 0, 1);
+        const bracketProgress = clamp((progress - 0.3) / 0.2, 0, 1);
         brackets.forEach(b => {
             b.style.opacity = bracketProgress * 0.5;
         });
 
-        // Phase 3: Data strip + Detail (55% - 85%)
-        const dataProgress = clamp((progress - 0.55) / 0.3, 0, 1);
+        // Phase 3: Data strip + Detail (40% - 65%)
+        const dataProgress = clamp((progress - 0.4) / 0.25, 0, 1);
         const dataEased = easeOutCubic(dataProgress);
 
         if (dataStrip) {
@@ -185,7 +187,7 @@ animEls.forEach(el => revealObs.observe(el));
             dataStrip.style.transform = `translateY(${20 * (1 - dataEased)}px)`;
         }
 
-        const detailProgress = clamp((progress - 0.6) / 0.3, 0, 1);
+        const detailProgress = clamp((progress - 0.45) / 0.25, 0, 1);
         const detailEased = easeOutCubic(detailProgress);
 
         if (detailEl) {
@@ -193,10 +195,10 @@ animEls.forEach(el => revealObs.observe(el));
             detailEl.style.transform = `translateX(${40 * (1 - detailEased)}px)`;
         }
 
-        // Phase 4: Final brightness punch (80% - 100%)
-        if (carImg && progress > 0.8) {
-            const punchProgress = clamp((progress - 0.8) / 0.2, 0, 1);
-            const finalBrightness = 0.8 + (0.15 * punchProgress);
+        // Phase 4: Final brightness punch (65% - 100%)
+        if (carImg && progress > 0.65) {
+            const punchProgress = clamp((progress - 0.65) / 0.35, 0, 1);
+            const finalBrightness = 0.85 + (0.1 * punchProgress);
             carImg.style.filter = `brightness(${finalBrightness}) contrast(1.1)`;
         }
 
