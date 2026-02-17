@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapsanity — Premium Vehicle Wraps & Commercial Branding</title>
+    <meta name="description" content="Wrapsanity is your premier destination for commercial vehicle wraps, fleet branding, color change wraps, and custom vinyl graphics. Transform your vehicles into moving billboards.">
+    <meta name="keywords" content="vehicle wraps, commercial wraps, fleet branding, vinyl wrap, car wrap, truck wrap, color change wrap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">WRAPSANITY</div>
+            <div class="loader-bar">
+                <div class="loader-bar-fill"></div>
+            </div>
+            <div class="loader-text">Loading Experience...</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">W</span>
+                <span class="logo-text">WRAPSANITY</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active" data-section="hero">Home</a></li>
+                <li><a href="#services" class="nav-link" data-section="services">Services</a></li>
+                <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
+                <li><a href="#process" class="nav-link" data-section="process">Process</a></li>
+                <li><a href="#testimonials" class="nav-link" data-section="testimonials">Reviews</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="nav-cta">Get a Quote</a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-links">
+            <li><a href="#hero" class="mobile-link">Home</a></li>
+            <li><a href="#services" class="mobile-link">Services</a></li>
+            <li><a href="#gallery" class="mobile-link">Gallery</a></li>
+            <li><a href="#process" class="mobile-link">Process</a></li>
+            <li><a href="#testimonials" class="mobile-link">Reviews</a></li>
+            <li><a href="#contact" class="mobile-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="section hero-section">
+        <div class="hero-content">
+            <div class="hero-badge" data-animate="fade-up">
+                <span class="badge-dot"></span>
+                Premium Vehicle Wraps
+            </div>
+            <h1 class="hero-title" data-animate="fade-up" data-delay="100">
+                Transform Your <br>
+                <span class="gradient-text">Vehicle Into Art</span>
+            </h1>
+            <p class="hero-subtitle" data-animate="fade-up" data-delay="200">
+                From fleet branding to color change wraps, we deliver stunning 
+                vehicle transformations that turn heads and drive business.
+            </p>
+            <div class="hero-actions" data-animate="fade-up" data-delay="300">
+                <a href="#contact" class="btn btn-primary">
+                    <span>Get Started</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#gallery" class="btn btn-secondary">
+                    <span>View Our Work</span>
+                </a>
+            </div>
+            <div class="hero-stats" data-animate="fade-up" data-delay="400">
+                <div class="stat">
+                    <span class="stat-number" data-count="2500">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Wraps Completed</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number" data-count="15">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number" data-count="99">0</span><span class="stat-plus">%</span>
+                    <span class="stat-label">Customer Satisfaction</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" data-animate="fade-up" data-delay="600">
+            <div class="scroll-mouse">
+                <div class="scroll-dot"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services-section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">Our Services</span>
+                <h2 class="section-title">What We <span class="gradient-text">Offer</span></h2>
+                <p class="section-desc">Industry-leading wrap solutions for every vehicle and every vision.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-animate="fade-up" data-delay="0">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="20" width="48" height="24" rx="6" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="20" cy="44" r="5" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="44" cy="44" r="5" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M8 30h48" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                            <path d="M32 20v24" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Fleet Wraps</h3>
+                    <p class="service-desc">Transform your entire fleet into mobile billboards. Consistent branding across all vehicles for maximum brand visibility and impact.</p>
+                    <div class="service-features">
+                        <span>Brand Consistency</span>
+                        <span>Bulk Pricing</span>
+                        <span>Fleet Management</span>
+                    </div>
+                </div>
+                <div class="service-card featured" data-animate="fade-up" data-delay="100">
+                    <div class="service-badge">Most Popular</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M12 36c0-8 4-16 20-16s20 8 20 16" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M8 36h48v4c0 4-2 8-8 8H16c-6 0-8-4-8-8v-4z" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="18" cy="48" r="4" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="46" cy="48" r="4" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M20 28l8-4 8 4 8-4" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Color Change Wraps</h3>
+                    <p class="service-desc">Give your vehicle a whole new look with premium color change wraps. From matte to gloss, satin to chrome — the possibilities are endless.</p>
+                    <div class="service-features">
+                        <span>Premium Vinyl</span>
+                        <span>100+ Colors</span>
+                        <span>Paint Protection</span>
+                    </div>
+                </div>
+                <div class="service-card" data-animate="fade-up" data-delay="200">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="12" y="8" width="40" height="48" rx="4" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M20 20h24M20 28h24M20 36h16" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                            <path d="M36 40l8 8m0-8l-8 8" stroke="currentColor" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Custom Graphics</h3>
+                    <p class="service-desc">Stand out with bespoke designs crafted by our in-house design team. From concept to installation, we bring your vision to life.</p>
+                    <div class="service-features">
+                        <span>Custom Design</span>
+                        <span>3D Mockups</span>
+                        <span>Brand Strategy</span>
+                    </div>
+                </div>
+                <div class="service-card" data-animate="fade-up" data-delay="0">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="4" y="16" width="56" height="32" rx="4" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M4 28h56" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                            <circle cx="32" cy="36" r="6" stroke="currentColor" stroke-width="2"/>
+                            <path d="M16 48v4M48 48v4" stroke="currentColor" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Commercial Signage</h3>
+                    <p class="service-desc">Professional window graphics, wall wraps, and business signage. Elevate your storefront and office spaces.</p>
+                    <div class="service-features">
+                        <span>Window Tint</span>
+                        <span>Wall Wraps</span>
+                        <span>Storefront</span>
+                    </div>
+                </div>
+                <div class="service-card" data-animate="fade-up" data-delay="100">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 8l24 14v20L32 56 8 42V22L32 8z" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M32 28v28M8 22l24 6 24-6" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Paint Protection Film</h3>
+                    <p class="service-desc">Shield your investment with invisible protection. Our PPF guards against rock chips, scratches, and environmental damage.</p>
+                    <div class="service-features">
+                        <span>Self-Healing</span>
+                        <span>UV Protection</span>
+                        <span>10yr Warranty</span>
+                    </div>
+                </div>
+                <div class="service-card" data-animate="fade-up" data-delay="200">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M32 10c12 0 22 10 22 22" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4"/>
+                            <circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="32" cy="32" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Ceramic Coating</h3>
+                    <p class="service-desc">The ultimate finish protection. Our nano-ceramic coating provides unmatched gloss, hydrophobic properties, and long-term protection.</p>
+                    <div class="service-features">
+                        <span>Hydrophobic</span>
+                        <span>High Gloss</span>
+                        <span>5yr Protection</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">Our Work</span>
+                <h2 class="section-title">Recent <span class="gradient-text">Projects</span></h2>
+                <p class="section-desc">Browse some of our latest vehicle transformations.</p>
+            </div>
+            <div class="gallery-filters" data-animate="fade-up" data-delay="100">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="fleet">Fleet</button>
+                <button class="filter-btn" data-filter="color">Color Change</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+                <button class="filter-btn" data-filter="custom">Custom</button>
+            </div>
+            <div class="gallery-grid" data-animate="fade-up" data-delay="200">
+                <div class="gallery-item large" data-category="fleet">
+                    <div class="gallery-visual" style="--hue: 220; --sat: 80%;">
+                        <div class="gallery-pattern pattern-1"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <rect x="5" y="15" width="70" height="30" rx="8" stroke="white" stroke-width="2"/>
+                                <circle cx="22" cy="45" r="6" stroke="white" stroke-width="2"/>
+                                <circle cx="58" cy="45" r="6" stroke="white" stroke-width="2"/>
+                                <rect x="15" y="20" width="20" height="12" rx="2" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                                <rect x="40" y="20" width="25" height="12" rx="2" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Fleet Wrap</span>
+                        <h3>Delivery Fleet Rebrand</h3>
+                        <p>Full fleet wrap for 25+ delivery vehicles</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="color">
+                    <div class="gallery-visual" style="--hue: 280; --sat: 70%;">
+                        <div class="gallery-pattern pattern-2"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <path d="M15 40c0-12 8-25 25-25s25 13 25 25" stroke="white" stroke-width="2"/>
+                                <path d="M10 40h60v5c0 4-4 8-10 8H20c-6 0-10-4-10-8v-5z" stroke="white" stroke-width="2"/>
+                                <circle cx="24" cy="53" r="5" stroke="white" stroke-width="2"/>
+                                <circle cx="56" cy="53" r="5" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Color Change</span>
+                        <h3>Matte Purple BMW M4</h3>
+                        <p>Full color change with ceramic coating</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-visual" style="--hue: 30; --sat: 85%;">
+                        <div class="gallery-pattern pattern-3"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <rect x="5" y="10" width="55" height="35" rx="4" stroke="white" stroke-width="2"/>
+                                <rect x="60" y="20" width="15" height="25" rx="4" stroke="white" stroke-width="2"/>
+                                <circle cx="20" cy="50" r="5" stroke="white" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="5" stroke="white" stroke-width="2"/>
+                                <circle cx="68" cy="50" r="5" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Commercial</span>
+                        <h3>Food Truck Full Wrap</h3>
+                        <p>Eye-catching design for local food brand</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="custom">
+                    <div class="gallery-visual" style="--hue: 160; --sat: 75%;">
+                        <div class="gallery-pattern pattern-4"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <path d="M10 38c0-10 6-22 30-22s30 12 30 22" stroke="white" stroke-width="2"/>
+                                <path d="M5 38h70v4c0 4-3 8-8 8H13c-5 0-8-4-8-8v-4z" stroke="white" stroke-width="2"/>
+                                <circle cx="22" cy="50" r="5" stroke="white" stroke-width="2"/>
+                                <circle cx="58" cy="50" r="5" stroke="white" stroke-width="2"/>
+                                <path d="M25 28l10-6 10 6 10-6" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Custom</span>
+                        <h3>Racing Livery Design</h3>
+                        <p>Custom race-inspired graphic wrap</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="color">
+                    <div class="gallery-visual" style="--hue: 350; --sat: 80%;">
+                        <div class="gallery-pattern pattern-5"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <path d="M12 38c0-10 6-22 28-22s28 12 28 22" stroke="white" stroke-width="2"/>
+                                <path d="M8 38h64v4c0 4-3 8-8 8H16c-5 0-8-4-8-8v-4z" stroke="white" stroke-width="2"/>
+                                <circle cx="22" cy="50" r="4" stroke="white" stroke-width="2"/>
+                                <circle cx="58" cy="50" r="4" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Color Change</span>
+                        <h3>Satin Red Tesla Model S</h3>
+                        <p>Premium satin chrome red finish</p>
+                    </div>
+                </div>
+                <div class="gallery-item large" data-category="fleet">
+                    <div class="gallery-visual" style="--hue: 200; --sat: 85%;">
+                        <div class="gallery-pattern pattern-6"></div>
+                        <div class="gallery-icon">
+                            <svg viewBox="0 0 80 60" fill="none">
+                                <rect x="5" y="12" width="70" height="30" rx="6" stroke="white" stroke-width="2"/>
+                                <circle cx="20" cy="46" r="5" stroke="white" stroke-width="2"/>
+                                <circle cx="60" cy="46" r="5" stroke="white" stroke-width="2"/>
+                                <path d="M15 22h50M15 30h50" stroke="white" stroke-width="1" opacity="0.4"/>
+                                <text x="25" y="28" fill="white" font-size="8" opacity="0.7">BRAND</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag">Fleet</span>
+                        <h3>Corporate Fleet Branding</h3>
+                        <p>40-vehicle corporate rebrand project</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section process-section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">How It Works</span>
+                <h2 class="section-title">Our <span class="gradient-text">Process</span></h2>
+                <p class="section-desc">From first contact to finished wrap — a seamless experience.</p>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step" data-animate="fade-up" data-delay="0">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Consultation</h3>
+                        <p>We discuss your vision, goals, and budget. Whether it's branding or aesthetics, we tailor a plan specifically for you.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step" data-animate="fade-up" data-delay="100">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Design & Mockup</h3>
+                        <p>Our design team creates photo-realistic 3D mockups of your vehicle wrap, so you can see exactly what the final product will look like.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step" data-animate="fade-up" data-delay="200">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Production</h3>
+                        <p>Using premium 3M and Avery Dennison materials, we print and laminate your wrap with the highest quality standards.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step" data-animate="fade-up" data-delay="300">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Installation</h3>
+                        <p>Our certified installers meticulously apply your wrap in our climate-controlled facility for a flawless finish.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step" data-animate="fade-up" data-delay="400">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h3>Quality Check & Delivery</h3>
+                        <p>Every wrap undergoes a rigorous quality inspection before we hand you the keys to your transformed vehicle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section testimonials-section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">What Our <span class="gradient-text">Clients Say</span></h2>
+                <p class="section-desc">Don't just take our word for it. Hear from our satisfied customers.</p>
+            </div>
+            <div class="testimonials-slider" data-animate="fade-up" data-delay="100">
+                <div class="testimonial-track" id="testimonial-track">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Wrapsanity transformed our entire fleet of 30 vehicles. The quality is outstanding and the ROI from mobile advertising has been incredible. Highly recommend!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 220;">JM</div>
+                            <div>
+                                <div class="author-name">James Mitchell</div>
+                                <div class="author-role">CEO, LogiFlow Delivery</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"The matte black wrap on my Porsche 911 is absolutely stunning. The attention to detail is unmatched. People stop me everywhere asking who did my wrap."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 350;">SK</div>
+                            <div>
+                                <div class="author-name">Sarah Kim</div>
+                                <div class="author-role">Car Enthusiast</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"We've used Wrapsanity for all our company vehicles and storefront graphics. Their design team is creative, and the installation is always flawless."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 160;">RP</div>
+                            <div>
+                                <div class="author-name">Robert Palmer</div>
+                                <div class="author-role">Owner, Palmer Electric</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"From the initial design concept to the final installation, the whole process was smooth and professional. The chrome delete on my SUV looks factory."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 40;">AT</div>
+                            <div>
+                                <div class="author-name">Amanda Torres</div>
+                                <div class="author-role">Business Owner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn" id="prev-btn" aria-label="Previous testimonial">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <div class="slider-dots" id="slider-dots"></div>
+                    <button class="slider-btn" id="next-btn" aria-label="Next testimonial">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info" data-animate="fade-up">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Ready To <span class="gradient-text">Wrap?</span></h2>
+                    <p class="section-desc">Get a free quote today. We'll get back to you within 24 hours with a detailed proposal for your project.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Phone</div>
+                                <div class="contact-value">(555) 123-WRAP</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value">info@wrapsanity.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Location</div>
+                                <div class="contact-value">123 Wrap Blvd, Suite 100</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                <circle cx="12" cy="12" r="5"/>
+                                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/>
+                                <polygon points="9.75,15.02 15.5,11.75 9.75,8.48"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper" data-animate="fade-up" data-delay="200">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Needed</label>
+                            <select id="service" name="service" required>
+                                <option value="" disabled selected>Select a service</option>
+                                <option value="fleet">Fleet Wraps</option>
+                                <option value="color">Color Change Wrap</option>
+                                <option value="custom">Custom Graphics</option>
+                                <option value="commercial">Commercial Signage</option>
+                                <option value="ppf">Paint Protection Film</option>
+                                <option value="ceramic">Ceramic Coating</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell Us About Your Project</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Describe your vehicle, desired wrap style, and any specific requirements..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
+                            <span>Send Message</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#hero" class="nav-logo">
+                        <span class="logo-icon">W</span>
+                        <span class="logo-text">WRAPSANITY</span>
+                    </a>
+                    <p class="footer-tagline">Transforming vehicles into masterpieces since 2011.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Fleet Wraps</a></li>
+                        <li><a href="#services">Color Change</a></li>
+                        <li><a href="#services">Custom Graphics</a></li>
+                        <li><a href="#services">Commercial Signage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#hero">About Us</a></li>
+                        <li><a href="#gallery">Portfolio</a></li>
+                        <li><a href="#process">Our Process</a></li>
+                        <li><a href="#testimonials">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Hours</h4>
+                    <ul>
+                        <li>Mon - Fri: 8am - 6pm</li>
+                        <li>Saturday: 9am - 4pm</li>
+                        <li>Sunday: Closed</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wrapsanity. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
