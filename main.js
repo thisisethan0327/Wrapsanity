@@ -1,8 +1,40 @@
 /* ============================================
-   WRAPSANITY — Three.js Scene & Interactions
+   WRAPSANITY — Gemini-Inspired Three.js Scene
+   Cinematic particles, grid, and HUD interactions
    ============================================ */
 
-// ---- Three.js Animated Background ----
+// =========================================
+// CUSTOM CURSOR
+// =========================================
+const cursor = document.getElementById('cursor');
+const cursorDot = cursor.querySelector('.cursor-dot');
+const cursorRing = cursor.querySelector('.cursor-ring');
+let cursorX = 0, cursorY = 0;
+let cursorTargetX = 0, cursorTargetY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    cursorTargetX = e.clientX;
+    cursorTargetY = e.clientY;
+});
+
+function updateCursor() {
+    cursorX += (cursorTargetX - cursorX) * 0.15;
+    cursorY += (cursorTargetY - cursorY) * 0.15;
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+    requestAnimationFrame(updateCursor);
+}
+updateCursor();
+
+// Hover effects for interactive elements
+const hoverTargets = document.querySelectorAll('a, button, input, textarea, select, .service-card, .gallery-item, .filter-btn, .slider-btn, .social-link');
+hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+// =========================================
+// THREE.JS SCENE
+// =========================================
 (function () {
     const canvas = document.getElementById('three-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -10,17 +42,17 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 30;
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 50;
 
-    // Colors matching the brand
-    const accentColor = new THREE.Color(0xff6b35);
-    const pinkColor = new THREE.Color(0xff3d7f);
-    const purpleColor = new THREE.Color(0xc850c0);
+    // Brand colors
+    const amber = new THREE.Color(0xe8a845);
+    const cyan = new THREE.Color(0x45c8e8);
+    const white = new THREE.Color(0x888899);
 
-    // ---- Particle System ----
-    const particleCount = 800;
-    const particleGeometry = new THREE.BufferGeometry();
+    // ---- Floating Particles ----
+    const particleCount = 600;
+    const pGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
@@ -28,35 +60,35 @@
 
     for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * 80;
-        positions[i3 + 1] = (Math.random() - 0.5) * 80;
-        positions[i3 + 2] = (Math.random() - 0.5) * 40;
+        positions[i3] = (Math.random() - 0.5) * 100;
+        positions[i3 + 1] = (Math.random() - 0.5) * 100;
+        positions[i3 + 2] = (Math.random() - 0.5) * 50 - 10;
 
-        const colorChoice = Math.random();
-        let color;
-        if (colorChoice < 0.33) color = accentColor;
-        else if (colorChoice < 0.66) color = pinkColor;
-        else color = purpleColor;
+        // Mostly amber with some cyan accents
+        const r = Math.random();
+        let col;
+        if (r < 0.6) col = amber;
+        else if (r < 0.8) col = cyan;
+        else col = white;
 
-        colors[i3] = color.r;
-        colors[i3 + 1] = color.g;
-        colors[i3 + 2] = color.b;
+        colors[i3] = col.r;
+        colors[i3 + 1] = col.g;
+        colors[i3 + 2] = col.b;
 
-        sizes[i] = Math.random() * 3 + 0.5;
+        sizes[i] = Math.random() * 2 + 0.3;
 
         velocities.push({
-            x: (Math.random() - 0.5) * 0.02,
-            y: (Math.random() - 0.5) * 0.02,
-            z: (Math.random() - 0.5) * 0.01,
+            x: (Math.random() - 0.5) * 0.015,
+            y: (Math.random() - 0.5) * 0.015,
+            z: (Math.random() - 0.5) * 0.008,
         });
     }
 
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    pGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Custom shader material for glowing particles
-    const particleMaterial = new THREE.ShaderMaterial({
+    const particleMat = new THREE.ShaderMaterial({
         uniforms: {
             uTime: { value: 0 },
             uMouse: { value: new THREE.Vector2(0, 0) },
@@ -71,20 +103,24 @@
             
             void main() {
                 vColor = color;
-                
                 vec3 pos = position;
-                pos.x += sin(uTime * 0.3 + position.y * 0.1) * 1.0;
-                pos.y += cos(uTime * 0.2 + position.x * 0.1) * 1.0;
                 
-                // Mouse influence
-                float dist = length(pos.xy - uMouse * 30.0);
-                pos.xy += normalize(pos.xy - uMouse * 30.0) * max(0.0, 5.0 - dist) * 0.3;
+                // Gentle wave motion
+                pos.x += sin(uTime * 0.15 + position.y * 0.05) * 1.5;
+                pos.y += cos(uTime * 0.12 + position.x * 0.05) * 1.5;
+                pos.z += sin(uTime * 0.1 + position.x * 0.03) * 0.5;
                 
-                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                gl_PointSize = size * (200.0 / -mvPosition.z);
-                gl_Position = projectionMatrix * mvPosition;
+                // Mouse repulsion
+                vec2 mPos = uMouse * 40.0;
+                float dist = length(pos.xy - mPos);
+                float repulse = smoothstep(12.0, 0.0, dist);
+                pos.xy += normalize(pos.xy - mPos + 0.001) * repulse * 4.0;
                 
-                vAlpha = smoothstep(40.0, 10.0, -mvPosition.z);
+                vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
+                gl_PointSize = size * (180.0 / -mvPos.z);
+                gl_Position = projectionMatrix * mvPos;
+                
+                vAlpha = smoothstep(60.0, 15.0, -mvPos.z);
             }
         `,
         fragmentShader: `
@@ -92,13 +128,13 @@
             varying float vAlpha;
             
             void main() {
-                float dist = length(gl_PointCoord - 0.5);
-                if (dist > 0.5) discard;
+                float d = length(gl_PointCoord - 0.5);
+                if (d > 0.5) discard;
                 
-                float glow = 1.0 - smoothstep(0.0, 0.5, dist);
-                glow = pow(glow, 2.0);
+                float glow = 1.0 - smoothstep(0.0, 0.5, d);
+                glow = pow(glow, 3.0);
                 
-                gl_FragColor = vec4(vColor, glow * vAlpha * 0.6);
+                gl_FragColor = vec4(vColor, glow * vAlpha * 0.4);
             }
         `,
         transparent: true,
@@ -106,191 +142,182 @@
         depthWrite: false,
     });
 
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    const particles = new THREE.Points(pGeo, particleMat);
     scene.add(particles);
 
-    // ---- Geometric shapes ----
-    const shapes = [];
+    // ---- Grid Floor ----
+    const gridSize = 80;
+    const gridDiv = 40;
+    const gridGeo = new THREE.BufferGeometry();
+    const gridVerts = [];
+    const step = gridSize / gridDiv;
 
-    // Create floating geometric wireframes
+    for (let i = 0; i <= gridDiv; i++) {
+        const x = -gridSize / 2 + i * step;
+        gridVerts.push(x, 0, -gridSize / 2, x, 0, gridSize / 2);
+    }
+    for (let i = 0; i <= gridDiv; i++) {
+        const z = -gridSize / 2 + i * step;
+        gridVerts.push(-gridSize / 2, 0, z, gridSize / 2, 0, z);
+    }
+
+    gridGeo.setAttribute('position', new THREE.Float32BufferAttribute(gridVerts, 3));
+    const gridMat = new THREE.LineBasicMaterial({
+        color: 0xe8a845,
+        transparent: true,
+        opacity: 0.04,
+    });
+    const grid = new THREE.LineSegments(gridGeo, gridMat);
+    grid.position.y = -20;
+    grid.rotation.x = 0;
+    scene.add(grid);
+
+    // ---- Wireframe geometric accents ----
+    const shapes = [];
     const shapeConfigs = [
-        { geo: new THREE.IcosahedronGeometry(3, 0), pos: [-18, 8, -10], color: 0xff6b35 },
-        { geo: new THREE.OctahedronGeometry(2, 0), pos: [20, -6, -15], color: 0xff3d7f },
-        { geo: new THREE.TorusGeometry(2.5, 0.5, 8, 24), pos: [-15, -10, -8], color: 0xc850c0 },
-        { geo: new THREE.TetrahedronGeometry(2, 0), pos: [16, 12, -12], color: 0xff6b35 },
-        { geo: new THREE.DodecahedronGeometry(1.5, 0), pos: [0, -15, -20], color: 0xff3d7f },
-        { geo: new THREE.IcosahedronGeometry(2, 0), pos: [25, 0, -18], color: 0xc850c0 },
+        { geo: new THREE.IcosahedronGeometry(3, 1), pos: [-25, 10, -20], color: 0xe8a845 },
+        { geo: new THREE.OctahedronGeometry(2, 0), pos: [28, -8, -25], color: 0x45c8e8 },
+        { geo: new THREE.TorusGeometry(3, 0.3, 8, 32), pos: [-20, -12, -15], color: 0xe8a845 },
+        { geo: new THREE.TetrahedronGeometry(1.5, 0), pos: [22, 15, -18], color: 0x45c8e8 },
+        { geo: new THREE.RingGeometry(2, 3, 6), pos: [0, -18, -22], color: 0xe8a845 },
+        { geo: new THREE.DodecahedronGeometry(1.8, 0), pos: [30, 5, -30], color: 0x888899 },
     ];
 
-    shapeConfigs.forEach((config, i) => {
-        const material = new THREE.MeshBasicMaterial({
-            color: config.color,
+    shapeConfigs.forEach((cfg) => {
+        const mat = new THREE.MeshBasicMaterial({
+            color: cfg.color,
             wireframe: true,
             transparent: true,
-            opacity: 0.15,
+            opacity: 0.06,
         });
-        const mesh = new THREE.Mesh(config.geo, material);
-        mesh.position.set(...config.pos);
+        const mesh = new THREE.Mesh(cfg.geo, mat);
+        mesh.position.set(...cfg.pos);
         mesh.userData = {
-            rotSpeed: {
-                x: (Math.random() - 0.5) * 0.005,
-                y: (Math.random() - 0.5) * 0.005,
-                z: (Math.random() - 0.5) * 0.003,
-            },
-            floatSpeed: 0.3 + Math.random() * 0.3,
+            rx: (Math.random() - 0.5) * 0.003,
+            ry: (Math.random() - 0.5) * 0.003,
+            rz: (Math.random() - 0.5) * 0.002,
+            floatSpeed: 0.2 + Math.random() * 0.3,
             floatOffset: Math.random() * Math.PI * 2,
-            originalY: config.pos[1],
+            baseY: cfg.pos[1],
         };
         scene.add(mesh);
         shapes.push(mesh);
     });
 
-    // ---- Connection lines between nearby particles ----
+    // ---- Connection lines ----
+    const lineMax = 150;
     const lineGeo = new THREE.BufferGeometry();
-    const maxLines = 200;
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineColors = new Float32Array(maxLines * 6);
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
+    const lPos = new Float32Array(lineMax * 6);
+    const lCol = new Float32Array(lineMax * 6);
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(lPos, 3));
+    lineGeo.setAttribute('color', new THREE.BufferAttribute(lCol, 3));
     const lineMat = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.15,
+        opacity: 0.12,
         blending: THREE.AdditiveBlending,
     });
-
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
 
-    // ---- Mouse tracking ----
-    let mouseX = 0, mouseY = 0;
-    let targetMouseX = 0, targetMouseY = 0;
-
+    // ---- Mouse ----
+    let mX = 0, mY = 0, tX = 0, tY = 0;
     document.addEventListener('mousemove', (e) => {
-        targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        tX = (e.clientX / window.innerWidth) * 2 - 1;
+        tY = -(e.clientY / window.innerHeight) * 2 + 1;
     });
 
-    // ---- Scroll tracking ----
     let scrollY = 0;
-    window.addEventListener('scroll', () => {
-        scrollY = window.scrollY;
-    });
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
-    // ---- Resize handling ----
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // ---- Animation loop ----
+    // ---- Animate ----
     const clock = new THREE.Clock();
 
     function animate() {
         requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
+        const t = clock.getElapsedTime();
 
-        // Smooth mouse
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
+        mX += (tX - mX) * 0.04;
+        mY += (tY - mY) * 0.04;
 
-        // Update particle shader uniforms
-        particleMaterial.uniforms.uTime.value = time;
-        particleMaterial.uniforms.uMouse.value.set(mouseX, mouseY);
+        particleMat.uniforms.uTime.value = t;
+        particleMat.uniforms.uMouse.value.set(mX, mY);
 
         // Move particles
-        const posArray = particleGeometry.attributes.position.array;
+        const pa = pGeo.attributes.position.array;
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            posArray[i3] += velocities[i].x;
-            posArray[i3 + 1] += velocities[i].y;
-            posArray[i3 + 2] += velocities[i].z;
-
-            // Wrap around
-            if (posArray[i3] > 40) posArray[i3] = -40;
-            if (posArray[i3] < -40) posArray[i3] = 40;
-            if (posArray[i3 + 1] > 40) posArray[i3 + 1] = -40;
-            if (posArray[i3 + 1] < -40) posArray[i3 + 1] = 40;
+            pa[i3] += velocities[i].x;
+            pa[i3 + 1] += velocities[i].y;
+            pa[i3 + 2] += velocities[i].z;
+            if (pa[i3] > 50) pa[i3] = -50;
+            if (pa[i3] < -50) pa[i3] = 50;
+            if (pa[i3 + 1] > 50) pa[i3 + 1] = -50;
+            if (pa[i3 + 1] < -50) pa[i3 + 1] = 50;
         }
-        particleGeometry.attributes.position.needsUpdate = true;
+        pGeo.attributes.position.needsUpdate = true;
 
-        // Update connection lines
-        let lineCount = 0;
-        const threshold = 8;
-        const lp = lineGeo.attributes.position.array;
-        const lc = lineGeo.attributes.color.array;
+        // Connection lines
+        let lc = 0;
+        const threshold = 10;
+        const lpArr = lineGeo.attributes.position.array;
+        const lcArr = lineGeo.attributes.color.array;
+        const checkCount = Math.min(particleCount, 80);
 
-        for (let i = 0; i < Math.min(particleCount, 100) && lineCount < maxLines; i++) {
-            const i3 = i * 3;
-            for (let j = i + 1; j < Math.min(particleCount, 100) && lineCount < maxLines; j++) {
-                const j3 = j * 3;
-                const dx = posArray[i3] - posArray[j3];
-                const dy = posArray[i3 + 1] - posArray[j3 + 1];
-                const dz = posArray[i3 + 2] - posArray[j3 + 2];
+        for (let i = 0; i < checkCount && lc < lineMax; i++) {
+            for (let j = i + 1; j < checkCount && lc < lineMax; j++) {
+                const dx = pa[i * 3] - pa[j * 3];
+                const dy = pa[i * 3 + 1] - pa[j * 3 + 1];
+                const dz = pa[i * 3 + 2] - pa[j * 3 + 2];
                 const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
                 if (dist < threshold) {
-                    const li = lineCount * 6;
-                    lp[li] = posArray[i3];
-                    lp[li + 1] = posArray[i3 + 1];
-                    lp[li + 2] = posArray[i3 + 2];
-                    lp[li + 3] = posArray[j3];
-                    lp[li + 4] = posArray[j3 + 1];
-                    lp[li + 5] = posArray[j3 + 2];
-
-                    const alpha = 1 - dist / threshold;
-                    lc[li] = 1 * alpha;
-                    lc[li + 1] = 0.42 * alpha;
-                    lc[li + 2] = 0.21 * alpha;
-                    lc[li + 3] = 1 * alpha;
-                    lc[li + 4] = 0.42 * alpha;
-                    lc[li + 5] = 0.21 * alpha;
-
-                    lineCount++;
+                    const li = lc * 6;
+                    const a = 1 - dist / threshold;
+                    lpArr[li] = pa[i * 3]; lpArr[li + 1] = pa[i * 3 + 1]; lpArr[li + 2] = pa[i * 3 + 2];
+                    lpArr[li + 3] = pa[j * 3]; lpArr[li + 4] = pa[j * 3 + 1]; lpArr[li + 5] = pa[j * 3 + 2];
+                    // Amber connection color
+                    lcArr[li] = 0.91 * a; lcArr[li + 1] = 0.66 * a; lcArr[li + 2] = 0.27 * a;
+                    lcArr[li + 3] = 0.91 * a; lcArr[li + 4] = 0.66 * a; lcArr[li + 5] = 0.27 * a;
+                    lc++;
                 }
             }
         }
-
-        // Clear remaining lines
-        for (let i = lineCount * 6; i < maxLines * 6; i++) {
-            lp[i] = 0;
-            lc[i] = 0;
-        }
-
+        for (let i = lc * 6; i < lineMax * 6; i++) { lpArr[i] = 0; lcArr[i] = 0; }
         lineGeo.attributes.position.needsUpdate = true;
         lineGeo.attributes.color.needsUpdate = true;
-        lineGeo.setDrawRange(0, lineCount * 2);
+        lineGeo.setDrawRange(0, lc * 2);
 
-        // Animate shapes
-        shapes.forEach((shape) => {
-            shape.rotation.x += shape.userData.rotSpeed.x;
-            shape.rotation.y += shape.userData.rotSpeed.y;
-            shape.rotation.z += shape.userData.rotSpeed.z;
-            shape.position.y =
-                shape.userData.originalY +
-                Math.sin(time * shape.userData.floatSpeed + shape.userData.floatOffset) * 2;
+        // Shapes
+        shapes.forEach(s => {
+            s.rotation.x += s.userData.rx;
+            s.rotation.y += s.userData.ry;
+            s.rotation.z += s.userData.rz;
+            s.position.y = s.userData.baseY + Math.sin(t * s.userData.floatSpeed + s.userData.floatOffset) * 2;
         });
 
-        // Parallax camera movement
-        camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
-        camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
+        // Grid animation
+        grid.rotation.x = -Math.PI / 2 + Math.sin(t * 0.05) * 0.02;
+        grid.position.z = -10 + Math.sin(t * 0.1) * 2;
 
-        // Scroll-based camera Z
-        const scrollFactor = scrollY * 0.005;
-        camera.position.z = 30 + scrollFactor;
+        // Camera
+        camera.position.x += (mX * 4 - camera.position.x) * 0.015;
+        camera.position.y += (mY * 3 - camera.position.y) * 0.015;
+        camera.position.z = 50 + scrollY * 0.008;
 
-        // Fade particles based on scroll
-        const heroHeight = window.innerHeight;
-        const fadeStart = heroHeight * 0.5;
-        const fadeEnd = heroHeight * 2;
-        let opacity = 1;
+        // Fade with scroll
+        const fadeStart = window.innerHeight * 0.3;
+        const fadeEnd = window.innerHeight * 2.5;
+        let op = 1;
         if (scrollY > fadeStart) {
-            opacity = Math.max(0.1, 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart));
+            op = Math.max(0.05, 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart));
         }
-        particleMaterial.opacity = opacity;
-        particles.material.opacity = opacity;
+        particles.material.opacity = op;
 
         renderer.render(scene, camera);
     }
@@ -298,53 +325,102 @@
     animate();
 })();
 
-// ---- Loader ----
+// =========================================
+// LOADER
+// =========================================
+const loaderFill = document.getElementById('loader-fill');
+const loaderPercent = document.getElementById('loader-percent');
+let loadProgress = 0;
+
+function animateLoader() {
+    loadProgress += (100 - loadProgress) * 0.03 + 0.5;
+    if (loadProgress > 100) loadProgress = 100;
+
+    loaderFill.style.width = loadProgress + '%';
+    loaderPercent.textContent = Math.floor(loadProgress) + '%';
+
+    if (loadProgress < 99.5) {
+        requestAnimationFrame(animateLoader);
+    } else {
+        loaderFill.style.width = '100%';
+        loaderPercent.textContent = '100%';
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('loaded');
+            // Trigger hero animations
+            animateHeroWords();
+        }, 400);
+    }
+}
+
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loader').classList.add('loaded');
-    }, 2200);
+    setTimeout(animateLoader, 300);
 });
 
-// ---- Navbar scroll effect ----
-const navbar = document.getElementById('navbar');
-let lastScrollY = 0;
+// =========================================
+// HERO WORD REVEAL
+// =========================================
+function animateHeroWords() {
+    const words = document.querySelectorAll('.title-word');
+    words.forEach((word, i) => {
+        setTimeout(() => {
+            word.classList.add('visible');
+        }, i * 120 + 200);
+    });
+}
 
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
+// =========================================
+// HUD TIME / FPS
+// =========================================
+const hudTime = document.getElementById('hud-time');
+const hudFps = document.getElementById('hud-fps');
+let lastTime = performance.now();
+let frameCount = 0;
 
-    if (currentScrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+function updateHUD() {
+    // Time
+    const now = new Date();
+    hudTime.textContent = now.toTimeString().split(' ')[0];
+
+    // FPS
+    frameCount++;
+    const elapsed = performance.now() - lastTime;
+    if (elapsed >= 1000) {
+        hudFps.textContent = Math.round(frameCount * 1000 / elapsed) + ' FPS';
+        frameCount = 0;
+        lastTime = performance.now();
     }
 
-    lastScrollY = currentScrollY;
+    requestAnimationFrame(updateHUD);
+}
+updateHUD();
+
+// =========================================
+// NAVBAR
+// =========================================
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// ---- Active nav link on scroll ----
+// Active nav link
 const sections = document.querySelectorAll('.section');
 const navLinks = document.querySelectorAll('.nav-link');
 
-const observerOptions = {
-    root: null,
-    rootMargin: '-40% 0px -40% 0px',
-    threshold: 0,
-};
-
-const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
         if (entry.isIntersecting) {
             const id = entry.target.id;
-            navLinks.forEach((link) => {
-                link.classList.toggle('active', link.dataset.section === id);
-            });
+            navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
         }
     });
-}, observerOptions);
+}, { rootMargin: '-40% 0px -40% 0px' });
 
-sections.forEach((section) => sectionObserver.observe(section));
+sections.forEach(s => sectionObs.observe(s));
 
-// ---- Mobile Menu ----
+// =========================================
+// MOBILE MENU
+// =========================================
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -355,85 +431,75 @@ hamburger.addEventListener('click', () => {
     document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
 });
 
-mobileLinks.forEach((link) => {
-    link.addEventListener('click', () => {
+mobileLinks.forEach(l => {
+    l.addEventListener('click', () => {
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
     });
 });
 
-// ---- Scroll Animations ----
-const animElements = document.querySelectorAll('[data-animate]');
+// =========================================
+// SCROLL REVEAL ANIMATIONS
+// =========================================
+const animEls = document.querySelectorAll('[data-animate="reveal"]');
 
-const animObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const delay = parseInt(entry.target.dataset.delay) || 0;
-                setTimeout(() => {
-                    entry.target.classList.add('animated');
-                }, delay);
-                animObserver.unobserve(entry.target);
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const delay = parseInt(entry.target.dataset.delay) || 0;
+            setTimeout(() => entry.target.classList.add('animated'), delay);
+            revealObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+animEls.forEach(el => revealObs.observe(el));
+
+// =========================================
+// COUNTER ANIMATION
+// =========================================
+const counters = document.querySelectorAll('.tele-value[data-count]');
+
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = parseInt(entry.target.dataset.count);
+            const duration = 2500;
+            const start = performance.now();
+
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 4);
+                entry.target.textContent = Math.floor(target * eased).toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+                else entry.target.textContent = target.toLocaleString();
             }
-        });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-);
 
-animElements.forEach((el) => animObserver.observe(el));
+            requestAnimationFrame(tick);
+            counterObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
 
-// ---- Counter Animation ----
-const counters = document.querySelectorAll('.stat-number[data-count]');
+counters.forEach(c => counterObs.observe(c));
 
-const counterObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.dataset.count);
-                const duration = 2000;
-                const start = performance.now();
-
-                function updateCounter(currentTime) {
-                    const elapsed = currentTime - start;
-                    const progress = Math.min(elapsed / duration, 1);
-
-                    // Ease out cubic
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    entry.target.textContent = Math.floor(target * eased).toLocaleString();
-
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        entry.target.textContent = target.toLocaleString();
-                    }
-                }
-
-                requestAnimationFrame(updateCounter);
-                counterObserver.unobserve(entry.target);
-            }
-        });
-    },
-    { threshold: 0.5 }
-);
-
-counters.forEach((counter) => counterObserver.observe(counter));
-
-// ---- Gallery Filter ----
+// =========================================
+// GALLERY FILTER
+// =========================================
 const filterBtns = document.querySelectorAll('.filter-btn');
 const galleryItems = document.querySelectorAll('.gallery-item');
 
-filterBtns.forEach((btn) => {
+filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        filterBtns.forEach((b) => b.classList.remove('active'));
+        filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         const filter = btn.dataset.filter;
 
-        galleryItems.forEach((item) => {
+        galleryItems.forEach((item, i) => {
             if (filter === 'all' || item.dataset.category === filter) {
                 item.classList.remove('hidden');
-                item.style.animation = 'fadeIn 0.5s ease forwards';
+                item.style.animation = `galleryReveal 0.6s ${i * 0.05}s var(--ease-out) both`;
             } else {
                 item.classList.add('hidden');
             }
@@ -441,117 +507,95 @@ filterBtns.forEach((btn) => {
     });
 });
 
-// ---- Testimonials Slider ----
+// =========================================
+// TESTIMONIALS SLIDER
+// =========================================
 const track = document.getElementById('testimonial-track');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
-const dotsContainer = document.getElementById('slider-dots');
+const dotsBox = document.getElementById('slider-dots');
 const cards = document.querySelectorAll('.testimonial-card');
-let currentSlide = 0;
+let slide = 0;
 
-// Create dots
 cards.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.classList.add('slider-dot');
     if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToSlide(i));
-    dotsContainer.appendChild(dot);
+    dot.addEventListener('click', () => goSlide(i));
+    dotsBox.appendChild(dot);
 });
 
 const dots = document.querySelectorAll('.slider-dot');
 
-function goToSlide(index) {
-    currentSlide = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+function goSlide(i) {
+    slide = i;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('active', j === i));
 }
 
-prevBtn.addEventListener('click', () => {
-    currentSlide = currentSlide === 0 ? cards.length - 1 : currentSlide - 1;
-    goToSlide(currentSlide);
-});
+prevBtn.addEventListener('click', () => goSlide(slide === 0 ? cards.length - 1 : slide - 1));
+nextBtn.addEventListener('click', () => goSlide(slide === cards.length - 1 ? 0 : slide + 1));
 
-nextBtn.addEventListener('click', () => {
-    currentSlide = currentSlide === cards.length - 1 ? 0 : currentSlide + 1;
-    goToSlide(currentSlide);
-});
-
-// Auto-slide
-let autoSlide = setInterval(() => {
-    currentSlide = currentSlide === cards.length - 1 ? 0 : currentSlide + 1;
-    goToSlide(currentSlide);
-}, 5000);
-
-// Pause on hover
+let autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
 track.addEventListener('mouseenter', () => clearInterval(autoSlide));
 track.addEventListener('mouseleave', () => {
-    autoSlide = setInterval(() => {
-        currentSlide = currentSlide === cards.length - 1 ? 0 : currentSlide + 1;
-        goToSlide(currentSlide);
-    }, 5000);
+    autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
 });
 
-// ---- Contact Form ----
+// =========================================
+// CONTACT FORM
+// =========================================
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    // Visual feedback
-    submitBtn.innerHTML = `
-        <span>Sending...</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin">
-            <circle cx="12" cy="12" r="10" stroke-dasharray="30 70"/>
-        </svg>
-    `;
+    submitBtn.innerHTML = '<span class="btn-text">TRANSMITTING...</span><span class="btn-arrow spin-anim">⟳</span>';
     submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.7';
+    submitBtn.style.opacity = '0.6';
 
     setTimeout(() => {
-        submitBtn.innerHTML = `
-            <span>Message Sent! ✓</span>
-        `;
-        submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+        submitBtn.innerHTML = '<span class="btn-text">MESSAGE SENT ✓</span>';
         submitBtn.style.opacity = '1';
+        submitBtn.style.borderColor = '#45c8e8';
+        submitBtn.style.color = '#45c8e8';
 
         setTimeout(() => {
-            submitBtn.innerHTML = `
-                <span>Send Message</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                </svg>
-            `;
-            submitBtn.style.background = '';
+            submitBtn.innerHTML = '<span class="btn-text">Send Message</span><span class="btn-arrow">→</span><span class="btn-bg"></span>';
+            submitBtn.style.borderColor = '';
+            submitBtn.style.color = '';
             submitBtn.disabled = false;
             contactForm.reset();
         }, 3000);
     }, 1500);
 });
 
-// ---- Smooth scroll for anchor links ----
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+// =========================================
+// SMOOTH SCROLL
+// =========================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
-// ---- CSS animation keyframe for gallery filter ----
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
+// =========================================
+// DYNAMIC CSS KEYFRAMES
+// =========================================
+const dynStyle = document.createElement('style');
+dynStyle.textContent = `
+    @keyframes galleryReveal {
+        from { opacity: 0; transform: scale(0.97) translateY(10px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
     }
-    .spin {
-        animation: spinAnim 1s linear infinite;
+    .spin-anim {
+        display: inline-block;
+        animation: spinA 1s linear infinite;
     }
-    @keyframes spinAnim {
+    @keyframes spinA {
         to { transform: rotate(360deg); }
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(dynStyle);
