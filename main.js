@@ -1,5 +1,5 @@
 /* ============================================
-   WRAPSANITY — Gemini-Inspired Three.js Scene
+   EMWRAPS — Gemini-Inspired Three.js Scene
    Cinematic particles, grid, and HUD interactions
    ============================================ */
 
