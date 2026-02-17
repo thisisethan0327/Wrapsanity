@@ -357,25 +357,54 @@ body.cursor-hover .cursor-ring {
 .loader-logo {
     display: flex;
     justify-content: center;
-    gap: 4px;
+    align-items: center;
 }
 
-.loader-letter {
-    font-family: var(--font-heading);
-    font-size: 3.5rem;
-    font-weight: 200;
-    letter-spacing: 12px;
-    color: var(--text-primary);
+.loader-logo-img {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
     opacity: 0;
-    transform: translateY(100%);
-    animation: letterReveal 0.8s var(--ease-out) forwards;
-    animation-delay: calc(var(--i) * 0.06s + 0.3s);
+    transform: scale(0.8);
+    animation: logoReveal 1.2s var(--ease-out) 0.4s forwards;
+    filter: drop-shadow(0 0 0px transparent);
 }
 
-@keyframes letterReveal {
-    to {
+@keyframes logoReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+        filter: drop-shadow(0 0 0px transparent);
+    }
+
+    60% {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 20px rgba(232, 50, 50, 0.3));
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(232, 50, 50, 0.15));
+    }
+}
+
+/* Subtle glow pulse after logo appears */
+.loader-logo-img {
+    animation: logoReveal 1.2s var(--ease-out) 0.4s forwards,
+        logoPulse 3s ease-in-out 1.6s infinite;
+}
+
+@keyframes logoPulse {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(232, 50, 50, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 20px rgba(232, 50, 50, 0.25));
     }
 }
 
