@@ -616,64 +616,68 @@ filterBtns.forEach(btn => {
 // TESTIMONIALS SLIDER
 // =========================================
 const track = document.getElementById('testimonial-track');
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-const dotsBox = document.getElementById('slider-dots');
-const cards = document.querySelectorAll('.testimonial-card');
-let slide = 0;
+if (track) {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const dotsBox = document.getElementById('slider-dots');
+    const cards = document.querySelectorAll('.testimonial-card');
+    let slide = 0;
 
-cards.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.classList.add('slider-dot');
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goSlide(i));
-    dotsBox.appendChild(dot);
-});
+    cards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('slider-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goSlide(i));
+        dotsBox.appendChild(dot);
+    });
 
-const dots = document.querySelectorAll('.slider-dot');
+    const dots = document.querySelectorAll('.slider-dot');
 
-function goSlide(i) {
-    slide = i;
-    track.style.transform = `translateX(-${i * 100}%)`;
-    dots.forEach((d, j) => d.classList.toggle('active', j === i));
+    function goSlide(i) {
+        slide = i;
+        track.style.transform = `translateX(-${i * 100}%)`;
+        dots.forEach((d, j) => d.classList.toggle('active', j === i));
+    }
+
+    prevBtn.addEventListener('click', () => goSlide(slide === 0 ? cards.length - 1 : slide - 1));
+    nextBtn.addEventListener('click', () => goSlide(slide === cards.length - 1 ? 0 : slide + 1));
+
+    let autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
+    track.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    track.addEventListener('mouseleave', () => {
+        autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
+    });
 }
-
-prevBtn.addEventListener('click', () => goSlide(slide === 0 ? cards.length - 1 : slide - 1));
-nextBtn.addEventListener('click', () => goSlide(slide === cards.length - 1 ? 0 : slide + 1));
-
-let autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
-track.addEventListener('mouseenter', () => clearInterval(autoSlide));
-track.addEventListener('mouseleave', () => {
-    autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
-});
 
 // =========================================
 // CONTACT FORM
 // =========================================
 const contactForm = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
+if (contactForm) {
+    const submitBtn = document.getElementById('submit-btn');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    submitBtn.innerHTML = '<span class="btn-text">TRANSMITTING...</span><span class="btn-arrow spin-anim">⟳</span>';
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.6';
-
-    setTimeout(() => {
-        submitBtn.innerHTML = '<span class="btn-text">MESSAGE SENT ✓</span>';
-        submitBtn.style.opacity = '1';
-        submitBtn.style.borderColor = '#45c8e8';
-        submitBtn.style.color = '#45c8e8';
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitBtn.innerHTML = '<span class="btn-text">TRANSMITTING...</span><span class="btn-arrow spin-anim">⟳</span>';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
 
         setTimeout(() => {
-            submitBtn.innerHTML = '<span class="btn-text">Send Message</span><span class="btn-arrow">→</span><span class="btn-bg"></span>';
-            submitBtn.style.borderColor = '';
-            submitBtn.style.color = '';
-            submitBtn.disabled = false;
-            contactForm.reset();
-        }, 3000);
-    }, 1500);
-});
+            submitBtn.innerHTML = '<span class="btn-text">MESSAGE SENT ✓</span>';
+            submitBtn.style.opacity = '1';
+            submitBtn.style.borderColor = '#45c8e8';
+            submitBtn.style.color = '#45c8e8';
+
+            setTimeout(() => {
+                submitBtn.innerHTML = '<span class="btn-text">Send Message</span><span class="btn-arrow">→</span><span class="btn-bg"></span>';
+                submitBtn.style.borderColor = '';
+                submitBtn.style.color = '';
+                submitBtn.disabled = false;
+                contactForm.reset();
+            }, 3000);
+        }, 1500);
+    });
+}
 
 // =========================================
 // SMOOTH SCROLL
