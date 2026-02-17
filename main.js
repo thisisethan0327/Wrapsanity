@@ -457,111 +457,6 @@ const revealObs = new IntersectionObserver((entries) => {
 animEls.forEach(el => revealObs.observe(el));
 
 // =========================================
-// CAR SHOWCASE — SCROLL-DRIVEN ANIMATION
-// =========================================
-(function () {
-    const section = document.getElementById('showcase');
-    if (!section) return;
-
-    const carImg = document.getElementById('showcase-car');
-    const detailEl = document.getElementById('showcase-detail');
-    const hudEl = document.getElementById('showcase-hud');
-    const topLeft = section.querySelector('.shud-top-left');
-    const center = section.querySelector('.shud-center');
-    const dataStrip = document.getElementById('shud-data');
-    const brackets = section.querySelectorAll('.shud-bracket');
-    const progressBar = document.getElementById('showcase-progress-bar');
-
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-    function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
-
-    function updateShowcase() {
-        const rect = section.getBoundingClientRect();
-        const sectionHeight = section.offsetHeight;
-        const viewHeight = window.innerHeight;
-
-        // How far we've scrolled INTO the section (0 = top enters, 1 = bottom leaves)
-        const scrolled = -rect.top / (sectionHeight - viewHeight);
-        const progress = clamp(scrolled, 0, 1);
-
-        // Update progress bar
-        if (progressBar) {
-            progressBar.style.height = (progress * 100) + '%';
-        }
-
-        // ---- Phase 1: Car image reveal (0% - 40%) ----
-        const carProgress = clamp(progress / 0.4, 0, 1);
-        const carEased = easeOutCubic(carProgress);
-
-        if (carImg) {
-            // Scale: 1.3 → 1.0
-            const scale = 1.3 - (0.3 * carEased);
-            // Opacity: 0 → 1
-            const opacity = carEased;
-            // Brightness: 0.4 → 0.8
-            const brightness = 0.4 + (0.4 * carEased);
-            // Contrast stays at 1.1
-            carImg.style.transform = `scale(${scale})`;
-            carImg.style.opacity = opacity;
-            carImg.style.filter = `brightness(${brightness}) contrast(1.1)`;
-        }
-
-        // ---- Phase 2: HUD elements fade in (30% - 60%) ----
-        const hudProgress = clamp((progress - 0.3) / 0.3, 0, 1);
-        const hudEased = easeOutCubic(hudProgress);
-
-        if (topLeft) {
-            topLeft.style.opacity = hudEased;
-            topLeft.style.transform = `translateX(${-20 * (1 - hudEased)}px)`;
-        }
-
-        // Title: slightly later (35% - 65%)
-        const titleProgress = clamp((progress - 0.35) / 0.3, 0, 1);
-        const titleEased = easeOutCubic(titleProgress);
-
-        if (center) {
-            center.style.opacity = titleEased;
-            center.style.transform = `translateY(${30 * (1 - titleEased)}px)`;
-        }
-
-        // Brackets (40% - 65%)
-        const bracketProgress = clamp((progress - 0.4) / 0.25, 0, 1);
-        brackets.forEach(b => {
-            b.style.opacity = bracketProgress * 0.5; // Subtle brackets
-        });
-
-        // ---- Phase 3: Data strip + Detail (55% - 85%) ----
-        const dataProgress = clamp((progress - 0.55) / 0.3, 0, 1);
-        const dataEased = easeOutCubic(dataProgress);
-
-        if (dataStrip) {
-            dataStrip.style.opacity = dataEased;
-            dataStrip.style.transform = `translateY(${20 * (1 - dataEased)}px)`;
-        }
-
-        // Detail inset (60% - 90%)
-        const detailProgress = clamp((progress - 0.6) / 0.3, 0, 1);
-        const detailEased = easeOutCubic(detailProgress);
-
-        if (detailEl) {
-            detailEl.style.opacity = detailEased;
-            detailEl.style.transform = `translateX(${40 * (1 - detailEased)}px)`;
-        }
-
-        // ---- Phase 4: Final brightness punch (80% - 100%) ----
-        if (carImg && progress > 0.8) {
-            const punchProgress = clamp((progress - 0.8) / 0.2, 0, 1);
-            const finalBrightness = 0.8 + (0.15 * punchProgress);
-            carImg.style.filter = `brightness(${finalBrightness}) contrast(1.1)`;
-        }
-
-        requestAnimationFrame(updateShowcase);
-    }
-
-    requestAnimationFrame(updateShowcase);
-})();
-
-// =========================================
 // COUNTER ANIMATION
 // =========================================
 const counters = document.querySelectorAll('.tele-value[data-count]');
@@ -616,68 +511,64 @@ filterBtns.forEach(btn => {
 // TESTIMONIALS SLIDER
 // =========================================
 const track = document.getElementById('testimonial-track');
-if (track) {
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const dotsBox = document.getElementById('slider-dots');
-    const cards = document.querySelectorAll('.testimonial-card');
-    let slide = 0;
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const dotsBox = document.getElementById('slider-dots');
+const cards = document.querySelectorAll('.testimonial-card');
+let slide = 0;
 
-    cards.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.classList.add('slider-dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goSlide(i));
-        dotsBox.appendChild(dot);
-    });
+cards.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.classList.add('slider-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goSlide(i));
+    dotsBox.appendChild(dot);
+});
 
-    const dots = document.querySelectorAll('.slider-dot');
+const dots = document.querySelectorAll('.slider-dot');
 
-    function goSlide(i) {
-        slide = i;
-        track.style.transform = `translateX(-${i * 100}%)`;
-        dots.forEach((d, j) => d.classList.toggle('active', j === i));
-    }
-
-    prevBtn.addEventListener('click', () => goSlide(slide === 0 ? cards.length - 1 : slide - 1));
-    nextBtn.addEventListener('click', () => goSlide(slide === cards.length - 1 ? 0 : slide + 1));
-
-    let autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
-    track.addEventListener('mouseenter', () => clearInterval(autoSlide));
-    track.addEventListener('mouseleave', () => {
-        autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
-    });
+function goSlide(i) {
+    slide = i;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('active', j === i));
 }
+
+prevBtn.addEventListener('click', () => goSlide(slide === 0 ? cards.length - 1 : slide - 1));
+nextBtn.addEventListener('click', () => goSlide(slide === cards.length - 1 ? 0 : slide + 1));
+
+let autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
+track.addEventListener('mouseenter', () => clearInterval(autoSlide));
+track.addEventListener('mouseleave', () => {
+    autoSlide = setInterval(() => goSlide(slide === cards.length - 1 ? 0 : slide + 1), 6000);
+});
 
 // =========================================
 // CONTACT FORM
 // =========================================
 const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    const submitBtn = document.getElementById('submit-btn');
+const submitBtn = document.getElementById('submit-btn');
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        submitBtn.innerHTML = '<span class="btn-text">TRANSMITTING...</span><span class="btn-arrow spin-anim">⟳</span>';
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.6';
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitBtn.innerHTML = '<span class="btn-text">TRANSMITTING...</span><span class="btn-arrow spin-anim">⟳</span>';
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.6';
+
+    setTimeout(() => {
+        submitBtn.innerHTML = '<span class="btn-text">MESSAGE SENT ✓</span>';
+        submitBtn.style.opacity = '1';
+        submitBtn.style.borderColor = '#45c8e8';
+        submitBtn.style.color = '#45c8e8';
 
         setTimeout(() => {
-            submitBtn.innerHTML = '<span class="btn-text">MESSAGE SENT ✓</span>';
-            submitBtn.style.opacity = '1';
-            submitBtn.style.borderColor = '#45c8e8';
-            submitBtn.style.color = '#45c8e8';
-
-            setTimeout(() => {
-                submitBtn.innerHTML = '<span class="btn-text">Send Message</span><span class="btn-arrow">→</span><span class="btn-bg"></span>';
-                submitBtn.style.borderColor = '';
-                submitBtn.style.color = '';
-                submitBtn.disabled = false;
-                contactForm.reset();
-            }, 3000);
-        }, 1500);
-    });
-}
+            submitBtn.innerHTML = '<span class="btn-text">Send Message</span><span class="btn-arrow">→</span><span class="btn-bg"></span>';
+            submitBtn.style.borderColor = '';
+            submitBtn.style.color = '';
+            submitBtn.disabled = false;
+            contactForm.reset();
+        }, 3000);
+    }, 1500);
+});
 
 // =========================================
 // SMOOTH SCROLL

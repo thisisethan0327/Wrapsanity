@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paint Protection Film — EMWRAPS</title>
+    <title>Paint Protection Film (PPF) — EMWRAPS</title>
     <meta name="description"
-        content="EMWRAPS Paint Protection Film (PPF) - Invisible shield for your vehicle. Self-healing, high-gloss, and 10-year warranty.">
+        content="Protect your investment with EMWRAPS premium paint protection film. XPEL Ultimate Plus PPF shields against rock chips, scratches, and UV damage with self-healing technology.">
+    <meta name="keywords"
+        content="paint protection film, PPF, XPEL, clear bra, car protection, rock chip protection, self-healing film">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ppf.css">
 </head>
 
 <body>
@@ -22,67 +25,14 @@
         <div class="cursor-ring"></div>
     </div>
 
-    <!-- Three.js Canvas -->
-    <canvas id="three-canvas"></canvas>
-
     <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
+
+    <!-- Scanline -->
     <div class="scanline"></div>
+
+    <!-- Vignette -->
     <div class="vignette"></div>
-
-    <!-- Loader -->
-    <div id="loader">
-        <div class="loader-content">
-            <div class="loader-hud-top">
-                <span class="hud-label">SYS.INIT</span>
-                <span class="hud-data blink">▮</span>
-            </div>
-            <div class="loader-logo-wrap">
-                <div class="loader-logo">
-                    <img src="img/logo/emw_logo_full.png" alt="EMWRAPS" class="loader-logo-img">
-                </div>
-            </div>
-            <div class="loader-bar">
-                <div class="loader-bar-track">
-                    <div class="loader-bar-fill" id="loader-fill"></div>
-                </div>
-                <div class="loader-percent" id="loader-percent">0%</div>
-            </div>
-            <div class="loader-hud-bottom">
-                <span class="hud-coord">47.6062° N</span>
-                <span class="hud-divider">|</span>
-                <span class="hud-coord">122.3321° W</span>
-                <span class="hud-divider">|</span>
-                <span class="hud-label mono">LOADING PPF MODULE</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- HUD Overlay -->
-    <div class="hud-overlay">
-        <div class="hud-corner hud-tl">
-            <div class="hud-line"></div>
-            <span class="hud-text">EMWRAPS™</span>
-            <span class="hud-subtext">PPF DIVISION</span>
-        </div>
-        <div class="hud-corner hud-tr">
-            <span class="hud-text" id="hud-time">00:00:00</span>
-            <span class="hud-subtext">REC ●</span>
-            <div class="hud-line"></div>
-        </div>
-        <div class="hud-corner hud-bl">
-            <div class="hud-line"></div>
-            <span class="hud-subtext" id="hud-coords">47.6062° N 122.3321° W</span>
-        </div>
-        <div class="hud-corner hud-br">
-            <span class="hud-subtext" id="hud-fps">60 FPS</span>
-            <div class="hud-line"></div>
-        </div>
-        <div class="hud-crosshair" id="hud-crosshair">
-            <div class="cross-h"></div>
-            <div class="cross-v"></div>
-        </div>
-    </div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -94,9 +44,16 @@
             </a>
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-link"><span class="nav-index">01</span>Home</a></li>
-                <li><a href="index.html#services" class="nav-link"><span class="nav-index">02</span>Services</a></li>
-                <li><a href="index.html#gallery" class="nav-link"><span class="nav-index">03</span>Gallery</a></li>
-                <li><a href="index.html#contact" class="nav-link"><span class="nav-index">06</span>Contact</a></li>
+                <li><a href="#ppf-hero" class="nav-link active" data-section="ppf-hero"><span
+                            class="nav-index">02</span>PPF</a></li>
+                <li><a href="#ppf-showcase" class="nav-link" data-section="ppf-showcase"><span
+                            class="nav-index">03</span>Showcase</a></li>
+                <li><a href="#ppf-benefits" class="nav-link" data-section="ppf-benefits"><span
+                            class="nav-index">04</span>Benefits</a></li>
+                <li><a href="#ppf-packages" class="nav-link" data-section="ppf-packages"><span
+                            class="nav-index">05</span>Packages</a></li>
+                <li><a href="#ppf-faq" class="nav-link" data-section="ppf-faq"><span class="nav-index">06</span>FAQ</a>
+                </li>
             </ul>
             <a href="index.html#contact" class="nav-cta">
                 <span class="cta-dot"></span>
@@ -114,16 +71,81 @@
     <div class="mobile-menu" id="mobile-menu">
         <ul class="mobile-links">
             <li><a href="index.html" class="mobile-link"><span class="mobile-index">01</span>Home</a></li>
-            <li><a href="index.html#services" class="mobile-link"><span class="mobile-index">02</span>Services</a></li>
-            <li><a href="index.html#contact" class="mobile-link"><span class="mobile-index">06</span>Contact</a></li>
+            <li><a href="#ppf-hero" class="mobile-link"><span class="mobile-index">02</span>PPF</a></li>
+            <li><a href="#ppf-showcase" class="mobile-link"><span class="mobile-index">03</span>Showcase</a></li>
+            <li><a href="#ppf-benefits" class="mobile-link"><span class="mobile-index">04</span>Benefits</a></li>
+            <li><a href="#ppf-packages" class="mobile-link"><span class="mobile-index">05</span>Packages</a></li>
+            <li><a href="#ppf-faq" class="mobile-link"><span class="mobile-index">06</span>FAQ</a></li>
         </ul>
     </div>
 
-    <!-- Spacer for sticky nav -->
-    <div style="height: 100px;"></div>
+    <!-- PPF Hero Section -->
+    <section id="ppf-hero" class="section hero-section ppf-hero-section">
+        <div class="hero-content">
+            <div class="hero-tag" data-animate="reveal">
+                <span class="tag-line"></span>
+                <span class="tag-text mono">PAINT PROTECTION FILM</span>
+                <span class="tag-line"></span>
+            </div>
+            <h1 class="hero-title" data-animate="reveal" data-delay="200">
+                <span class="title-line"><span class="title-word" data-animate="word">Invisible</span></span>
+                <span class="title-line"><span class="title-word accent" data-animate="word">Armor</span> <span
+                        class="title-word" data-animate="word">For</span></span>
+                <span class="title-line"><span class="title-word" data-animate="word">Your</span> <span
+                        class="title-word accent" data-animate="word">Paint</span></span>
+            </h1>
+            <p class="hero-subtitle" data-animate="reveal" data-delay="600">
+                Self-healing, optically clear protection that shields your vehicle's paint from rock chips, scratches,
+                bug acids, bird droppings, and UV degradation — without altering its appearance.
+            </p>
+            <div class="hero-actions" data-animate="reveal" data-delay="800">
+                <a href="index.html#contact" class="btn btn-primary">
+                    <span class="btn-text">Get Protected</span>
+                    <span class="btn-arrow">→</span>
+                    <span class="btn-bg"></span>
+                </a>
+                <a href="#ppf-showcase" class="btn btn-ghost">
+                    <span class="btn-text">View Our Work</span>
+                    <span class="btn-arrow">↓</span>
+                </a>
+            </div>
+            <!-- PPF Stats -->
+            <div class="telemetry" data-animate="reveal" data-delay="1000">
+                <div class="telemetry-item">
+                    <span class="tele-label mono">PROTECTION</span>
+                    <span class="tele-value" data-count="10">0</span>
+                    <span class="tele-suffix">YR</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">THICKNESS</span>
+                    <span class="tele-value" data-count="8">0</span>
+                    <span class="tele-suffix">MIL</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">SELF-HEAL</span>
+                    <span class="tele-value" data-count="100">0</span>
+                    <span class="tele-suffix">%</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">CLARITY</span>
+                    <span class="tele-value" data-count="99">0</span>
+                    <span class="tele-suffix">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" data-animate="reveal" data-delay="1200">
+            <div class="scroll-line">
+                <div class="scroll-dot"></div>
+            </div>
+            <span class="mono">SCROLL</span>
+        </div>
+    </section>
 
-    <!-- Car Showcase Section (Moved here) -->
-    <section id="showcase" class="showcase-section">
+    <!-- Car Showcase — Scroll-Driven Cinematic Reveal -->
+    <section id="ppf-showcase" class="showcase-section section">
         <div class="showcase-sticky">
             <!-- Main car image -->
             <div class="showcase-car-wrapper">
@@ -151,7 +173,7 @@
                 <div class="shud-data-strip" id="shud-data">
                     <div class="shud-data-item">
                         <span class="shud-data-label mono">MATERIAL</span>
-                        <span class="shud-data-value">XPEL Ultimate Plus</span>
+                        <span class="shud-data-value">UNITY USA</span>
                     </div>
                     <div class="shud-data-divider"></div>
                     <div class="shud-data-item">
@@ -161,7 +183,7 @@
                     <div class="shud-data-divider"></div>
                     <div class="shud-data-item">
                         <span class="shud-data-label mono">FINISH</span>
-                        <span class="shud-data-value">Gloss Mint Green</span>
+                        <span class="shud-data-value">ULTRA-GLOSS</span>
                     </div>
                     <div class="shud-data-divider"></div>
                     <div class="shud-data-item">
@@ -182,20 +204,276 @@
         </div>
     </section>
 
-    <!-- Additional PPF Info Section -->
-    <section class="section">
+    <!-- Benefits Section -->
+    <section id="ppf-benefits" class="section ppf-benefits-section">
         <div class="container">
             <div class="section-header" data-animate="reveal">
-                <h2 class="section-title">Invisible <span class="accent">Protection</span></h2>
-                <p class="section-desc">Keep your vehicle looking showroom new with our premium Paint Protection Film
-                    packages.</p>
+                <div class="section-header-top">
+                    <span class="section-index mono">03</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">WHY PPF</span>
+                </div>
+                <h2 class="section-title">The Ultimate <span class="accent">Shield</span></h2>
+                <p class="section-desc">XPEL Ultimate Plus is the gold standard in paint protection — here's why.</p>
             </div>
-            <div style="text-align: center; margin-bottom: 80px;">
-                <a href="index.html#contact" class="btn btn-primary">
-                    <span class="btn-text">Get Protected</span>
-                    <span class="btn-arrow">→</span>
-                    <span class="btn-bg"></span>
-                </a>
+            <div class="ppf-benefits-grid">
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="0">
+                    <div class="card-index mono">01</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 8c-20 24-20 36-20 36a20 20 0 0040 0s0-12-20-36z" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M24 38c4-4 12-4 16 0" stroke="currentColor" stroke-width="1" opacity="0.4" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">Self-Healing</h3>
+                    <p class="ppf-benefit-desc">Scratches and swirl marks disappear with heat. The top coat reforms
+                        itself, keeping the film looking factory-fresh for years.</p>
+                </div>
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="100">
+                    <div class="card-index mono">02</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 8L10 18v16c0 14 10 22 22 26 12-4 22-12 22-26V18L32 8z" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M22 34l8 8 12-16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">Rock Chip Defense</h3>
+                    <p class="ppf-benefit-desc">8-mil thick film absorbs the impact of road debris, gravel, and other
+                        hazards — preventing costly paint repairs.</p>
+                </div>
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="200">
+                    <div class="card-index mono">03</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="20" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M32 12v40M12 32h40" stroke="currentColor" stroke-width="0.75" opacity="0.3" />
+                            <circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="1" opacity="0.5" />
+                            <path d="M20 20l24 24M44 20L20 44" stroke="currentColor" stroke-width="0.5" opacity="0.2" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">Optically Clear</h3>
+                    <p class="ppf-benefit-desc">99%+ optical clarity means the film is virtually invisible. Your paint
+                        color and finish shine through without distortion.</p>
+                </div>
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="300">
+                    <div class="card-index mono">04</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="24" r="12" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M20 24h24" stroke="currentColor" stroke-width="0.75" opacity="0.4" />
+                            <path d="M26 56l6-20 6 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M20 24c0-12 24-12 24 0" stroke="currentColor" stroke-width="0.5" opacity="0.3" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">UV Protection</h3>
+                    <p class="ppf-benefit-desc">Blocks harmful UV rays that cause fading, oxidation, and yellowing. Your
+                        paint stays vibrant for the life of the film.</p>
+                </div>
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="400">
+                    <div class="card-index mono">05</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 10c-12 16-18 24-18 32a18 18 0 0036 0c0-8-6-16-18-32z" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M26 36c0-4 2-8 6-14" stroke="currentColor" stroke-width="1" opacity="0.5"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">Hydrophobic</h3>
+                    <p class="ppf-benefit-desc">Water beads and sheets off effortlessly. Contaminants like bird
+                        droppings and tree sap are easy to clean without damage.</p>
+                </div>
+                <div class="ppf-benefit-card" data-animate="reveal" data-delay="500">
+                    <div class="card-index mono">06</div>
+                    <div class="card-line"></div>
+                    <div class="ppf-benefit-icon">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="16" width="48" height="32" rx="4" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M8 28h48" stroke="currentColor" stroke-width="0.75" opacity="0.3" />
+                            <path d="M32 28v20" stroke="currentColor" stroke-width="0.75" opacity="0.3" />
+                            <path d="M18 36h12v8H18z" stroke="currentColor" stroke-width="1" opacity="0.5" />
+                            <path d="M42 32v8M46 32v8" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 class="ppf-benefit-title">Resale Value</h3>
+                    <p class="ppf-benefit-desc">Factory paint in pristine condition adds thousands to your car's resale
+                        value. PPF is an investment that pays for itself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="ppf-packages" class="section ppf-packages-section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <div class="section-header-top">
+                    <span class="section-index mono">04</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">COVERAGE OPTIONS</span>
+                </div>
+                <h2 class="section-title">Choose Your <span class="accent">Coverage</span></h2>
+                <p class="section-desc">From high-impact zones to full body — we have a package for every level of
+                    protection.</p>
+            </div>
+            <div class="ppf-packages-grid">
+                <div class="ppf-package-card" data-animate="reveal" data-delay="0">
+                    <div class="ppf-package-tier mono">ESSENTIAL</div>
+                    <div class="ppf-package-name">Partial Front</div>
+                    <div class="ppf-package-desc">Protection for the most vulnerable areas.</div>
+                    <ul class="ppf-package-features">
+                        <li><span class="mono ppf-check">✓</span> Front bumper</li>
+                        <li><span class="mono ppf-check">✓</span> Partial hood (24")</li>
+                        <li><span class="mono ppf-check">✓</span> Partial fenders</li>
+                        <li><span class="mono ppf-check">✓</span> Side mirrors</li>
+                        <li><span class="mono ppf-check">✓</span> Headlights</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+                <div class="ppf-package-card ppf-package-featured" data-animate="reveal" data-delay="150">
+                    <div class="ppf-package-badge mono">★ MOST POPULAR</div>
+                    <div class="ppf-package-tier mono">PREMIUM</div>
+                    <div class="ppf-package-name">Full Front</div>
+                    <div class="ppf-package-desc">Complete front-end coverage for maximum road protection.</div>
+                    <ul class="ppf-package-features">
+                        <li><span class="mono ppf-check">✓</span> Full hood</li>
+                        <li><span class="mono ppf-check">✓</span> Full fenders</li>
+                        <li><span class="mono ppf-check">✓</span> Front bumper</li>
+                        <li><span class="mono ppf-check">✓</span> Side mirrors</li>
+                        <li><span class="mono ppf-check">✓</span> Headlights</li>
+                        <li><span class="mono ppf-check">✓</span> A-pillars</li>
+                        <li><span class="mono ppf-check">✓</span> Rocker panels</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-primary btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
+                    </a>
+                </div>
+                <div class="ppf-package-card" data-animate="reveal" data-delay="300">
+                    <div class="ppf-package-tier mono">ULTIMATE</div>
+                    <div class="ppf-package-name">Full Body</div>
+                    <div class="ppf-package-desc">Head-to-tail protection — every painted surface covered.</div>
+                    <ul class="ppf-package-features">
+                        <li><span class="mono ppf-check">✓</span> Everything in Premium</li>
+                        <li><span class="mono ppf-check">✓</span> Full roof</li>
+                        <li><span class="mono ppf-check">✓</span> Full doors</li>
+                        <li><span class="mono ppf-check">✓</span> Rear bumper</li>
+                        <li><span class="mono ppf-check">✓</span> Rear quarters</li>
+                        <li><span class="mono ppf-check">✓</span> Trunk/hatch</li>
+                        <li><span class="mono ppf-check">✓</span> Door edges & cups</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="ppf-faq" class="section ppf-faq-section">
+        <div class="container">
+            <div class="section-header" data-animate="reveal">
+                <div class="section-header-top">
+                    <span class="section-index mono">05</span>
+                    <span class="section-line"></span>
+                    <span class="section-tag mono">QUESTIONS</span>
+                </div>
+                <h2 class="section-title">Frequently <span class="accent">Asked</span></h2>
+            </div>
+            <div class="ppf-faq-list">
+                <div class="ppf-faq-item" data-animate="reveal" data-delay="0">
+                    <button class="ppf-faq-question" aria-expanded="false">
+                        <span>How long does PPF last?</span>
+                        <span class="ppf-faq-icon mono">+</span>
+                    </button>
+                    <div class="ppf-faq-answer">
+                        <p>XPEL Ultimate Plus comes with a 10-year manufacturer warranty. With proper care, PPF can last
+                            even longer. The film maintains its clarity, self-healing properties, and protective
+                            performance throughout its lifespan.</p>
+                    </div>
+                </div>
+                <div class="ppf-faq-item" data-animate="reveal" data-delay="100">
+                    <button class="ppf-faq-question" aria-expanded="false">
+                        <span>Can PPF be removed without damaging paint?</span>
+                        <span class="ppf-faq-icon mono">+</span>
+                    </button>
+                    <div class="ppf-faq-answer">
+                        <p>Yes. When professionally removed, XPEL PPF leaves your factory paint completely intact —
+                            often in better condition than unprotected panels. The adhesive is designed for clean
+                            removal.</p>
+                    </div>
+                </div>
+                <div class="ppf-faq-item" data-animate="reveal" data-delay="200">
+                    <button class="ppf-faq-question" aria-expanded="false">
+                        <span>How does self-healing work?</span>
+                        <span class="ppf-faq-icon mono">+</span>
+                    </button>
+                    <div class="ppf-faq-answer">
+                        <p>The elastomeric polymer top coat has shape-memory properties. When scratched, heat from the
+                            sun or warm water causes the top layer to flow back into its original form, making scratches
+                            vanish within minutes.</p>
+                    </div>
+                </div>
+                <div class="ppf-faq-item" data-animate="reveal" data-delay="300">
+                    <button class="ppf-faq-question" aria-expanded="false">
+                        <span>How long does installation take?</span>
+                        <span class="ppf-faq-icon mono">+</span>
+                    </button>
+                    <div class="ppf-faq-answer">
+                        <p>Partial front installations typically take 1-2 days. Full front coverage takes 2-3 days. Full
+                            body PPF requires 4-5 days. We never rush — precision and dust-free conditions are critical
+                            for a flawless result.</p>
+                    </div>
+                </div>
+                <div class="ppf-faq-item" data-animate="reveal" data-delay="400">
+                    <button class="ppf-faq-question" aria-expanded="false">
+                        <span>Can I wash my car normally after PPF?</span>
+                        <span class="ppf-faq-icon mono">+</span>
+                    </button>
+                    <div class="ppf-faq-answer">
+                        <p>Absolutely. After the initial 48-hour curing period, you can wash with any pH-neutral
+                            shampoo. Hand washing is recommended. The hydrophobic top coat actually makes washing
+                            easier.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section ppf-cta-section">
+        <div class="container">
+            <div class="ppf-cta-content" data-animate="reveal">
+                <h2 class="section-title">Ready To <span class="accent">Protect?</span></h2>
+                <p class="section-desc">Every day without PPF is a day your paint is exposed. Get a free consultation
+                    and let us safeguard your investment.</p>
+                <div class="ppf-cta-actions">
+                    <a href="index.html#contact" class="btn btn-primary">
+                        <span class="btn-text">Schedule Consultation</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
+                    </a>
+                    <a href="tel:5551234567" class="btn btn-ghost">
+                        <span class="btn-text">(555) 123-WRAP</span>
+                        <span class="btn-arrow">☎</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -203,15 +481,56 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <span class="logo-bracket">[</span>
+                        <span class="logo-text">EMWRAPS</span>
+                        <span class="logo-bracket">]</span>
+                    </a>
+                    <p class="footer-tagline">Transforming vehicles into masterpieces since 2011.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">SERVICES</h4>
+                    <ul>
+                        <li><a href="index.html#services">Vinyl Wraps</a></li>
+                        <li><a href="ppf.html">Paint Protection</a></li>
+                        <li><a href="index.html#services">Itasha</a></li>
+                        <li><a href="index.html#services">Fleet Wraps</a></li>
+                        <li><a href="index.html#services">Ceramic Coating</a></li>
+                        <li><a href="index.html#services">Aftermarket Installs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">COMPANY</h4>
+                    <ul>
+                        <li><a href="index.html">About Us</a></li>
+                        <li><a href="index.html#gallery">Portfolio</a></li>
+                        <li><a href="index.html#process">Our Process</a></li>
+                        <li><a href="index.html#testimonials">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-group">
+                    <h4 class="mono">HOURS</h4>
+                    <ul>
+                        <li>Mon - Fri: 8am - 6pm</li>
+                        <li>Saturday: 9am - 4pm</li>
+                        <li>Sunday: Closed</li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer-bottom">
                 <p class="mono">&copy; 2026 EMWRAPS. ALL RIGHTS RESERVED.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="mono">PRIVACY</a>
+                    <a href="#" class="mono">TERMS</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="main.js"></script>
+    <script src="ppf.js"></script>
 </body>
 
 </html>
