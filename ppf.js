@@ -26,7 +26,7 @@ function updateCursor() {
 updateCursor();
 
 // Hover effects
-const hoverTargets = document.querySelectorAll('a, button, .ppf-benefit-card, .ppf-package-card, .ppf-faq-question');
+const hoverTargets = document.querySelectorAll('a, button, .ppf-benefit-card, .ppf-package-card, .ppf-faq-question, .car-selector-item');
 hoverTargets.forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
@@ -111,23 +111,101 @@ const revealObs = new IntersectionObserver((entries) => {
 animEls.forEach(el => revealObs.observe(el));
 
 // =========================================
-// CAR SHOWCASE — SCROLL-DRIVEN ANIMATION
+// CAR SHOWCASE — SCROLL-DRIVEN ANIMATION + CAR SELECTOR
 // =========================================
 (function () {
     const section = document.getElementById('ppf-showcase');
     if (!section) return;
 
     const carImg = document.getElementById('showcase-car');
+    const detailImg = document.getElementById('showcase-detail-img');
     const detailEl = document.getElementById('showcase-detail');
     const topLeft = section.querySelector('.shud-top-left');
     const center = section.querySelector('.shud-center');
     const dataStrip = document.getElementById('shud-data');
     const brackets = section.querySelectorAll('.shud-bracket');
     const progressBar = document.getElementById('showcase-progress-bar');
+    const carSelector = document.getElementById('car-selector');
+    const selectorItems = document.querySelectorAll('.car-selector-item');
+
+    // HUD value elements
+    const hudTitle = document.getElementById('shud-title');
+    const hudSubtitle = document.getElementById('shud-subtitle');
+    const hudMaterial = document.getElementById('shud-material');
+    const hudCoverage = document.getElementById('shud-coverage');
+    const hudFinish = document.getElementById('shud-finish');
+    const hudWarranty = document.getElementById('shud-warranty');
+
+    let currentIndex = 0;
+    let isTransitioning = false;
 
     function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
     function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
+    // --- Car Selector: switch cars on click ---
+    selectorItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const newIndex = parseInt(item.dataset.index);
+            if (newIndex === currentIndex || isTransitioning) return;
+
+            isTransitioning = true;
+            currentIndex = newIndex;
+
+            // Update active state
+            selectorItems.forEach(s => s.classList.remove('active'));
+            item.classList.add('active');
+
+            // Crossfade main image
+            carImg.classList.add('crossfade-out');
+
+            setTimeout(() => {
+                carImg.src = item.dataset.main;
+                carImg.alt = item.dataset.title + ' - PPF by EMWRAPS';
+                carImg.classList.remove('crossfade-out');
+                carImg.classList.add('crossfade-in');
+
+                // Crossfade detail
+                if (detailImg) {
+                    detailImg.src = item.dataset.detail;
+                }
+
+                // Update HUD text with animation
+                if (hudTitle) {
+                    hudTitle.textContent = item.dataset.title;
+                    hudTitle.classList.add('crossfade');
+                }
+                if (hudSubtitle) {
+                    hudSubtitle.textContent = item.dataset.subtitle;
+                    hudSubtitle.classList.add('crossfade');
+                }
+
+                // Update data strip values
+                const updates = [
+                    [hudMaterial, item.dataset.material],
+                    [hudCoverage, item.dataset.coverage],
+                    [hudFinish, item.dataset.finish],
+                    [hudWarranty, item.dataset.warranty]
+                ];
+                updates.forEach(([el, val]) => {
+                    if (el) {
+                        el.textContent = val;
+                        el.classList.add('crossfade');
+                    }
+                });
+
+                // Clean up animation classes
+                setTimeout(() => {
+                    carImg.classList.remove('crossfade-in');
+                    if (hudTitle) hudTitle.classList.remove('crossfade');
+                    if (hudSubtitle) hudSubtitle.classList.remove('crossfade');
+                    updates.forEach(([el]) => { if (el) el.classList.remove('crossfade'); });
+                    isTransitioning = false;
+                }, 500);
+            }, 400);
+        });
+    });
+
+    // --- Scroll-driven animation (unchanged logic, plus selector visibility) ---
     function updateShowcase() {
         const rect = section.getBoundingClientRect();
         const sectionHeight = section.offsetHeight;
@@ -141,19 +219,24 @@ animEls.forEach(el => revealObs.observe(el));
             progressBar.style.height = (progress * 100) + '%';
         }
 
-        // Phase 1: Car reveal (0% - 25%) — starts partially visible, no black gap
-        const carProgress = clamp(progress / 0.25, 0, 1);
-        const carEased = easeOutCubic(carProgress);
+        // Show car selector after 30% scroll
+        if (carSelector) {
+            carSelector.classList.toggle('visible', progress > 0.3);
+        }
 
-        if (carImg) {
-            const scale = 1.15 - (0.15 * carEased);
-            // Start at 0.15 opacity so there's never a fully black screen
-            const opacity = 0.15 + (0.85 * carEased);
-            // Brightness starts higher for a softer intro
-            const brightness = 0.5 + (0.35 * carEased);
-            carImg.style.transform = `scale(${scale})`;
-            carImg.style.opacity = opacity;
-            carImg.style.filter = `brightness(${brightness}) contrast(1.1)`;
+        // Phase 1: Car reveal (0% - 25%) — starts partially visible, no black gap
+        if (!isTransitioning) {
+            const carProgress = clamp(progress / 0.25, 0, 1);
+            const carEased = easeOutCubic(carProgress);
+
+            if (carImg) {
+                const scale = 1.15 - (0.15 * carEased);
+                const opacity = 0.15 + (0.85 * carEased);
+                const brightness = 0.5 + (0.35 * carEased);
+                carImg.style.transform = `scale(${scale})`;
+                carImg.style.opacity = opacity;
+                carImg.style.filter = `brightness(${brightness}) contrast(1.1)`;
+            }
         }
 
         // Phase 2: HUD elements (20% - 45%)
@@ -196,7 +279,7 @@ animEls.forEach(el => revealObs.observe(el));
         }
 
         // Phase 4: Final brightness punch (65% - 100%)
-        if (carImg && progress > 0.65) {
+        if (carImg && progress > 0.65 && !isTransitioning) {
             const punchProgress = clamp((progress - 0.65) / 0.35, 0, 1);
             const finalBrightness = 0.85 + (0.1 * punchProgress);
             carImg.style.filter = `brightness(${finalBrightness}) contrast(1.1)`;

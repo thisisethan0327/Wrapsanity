@@ -1272,6 +1272,208 @@ body.cursor-hover .cursor-ring {
     box-shadow: 0 0 8px var(--accent);
 }
 
+/* Car Selector Wheel */
+.car-selector {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 25;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+}
+
+.car-selector.visible {
+    opacity: 1;
+}
+
+.car-selector-track {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    position: relative;
+}
+
+.car-selector-line {
+    position: absolute;
+    right: 5px;
+    top: 16px;
+    bottom: 16px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--border), transparent);
+    z-index: 0;
+}
+
+.car-selector-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 8px 12px;
+    background: rgba(10, 10, 12, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: none;
+    transition: all 0.4s var(--ease-smooth);
+    position: relative;
+    z-index: 1;
+    font-family: inherit;
+    color: inherit;
+    min-width: 180px;
+}
+
+.car-selector-item:hover {
+    border-color: var(--border-hover);
+    background: rgba(10, 10, 12, 0.8);
+}
+
+.car-selector-item.active {
+    border-color: var(--accent);
+    background: rgba(10, 10, 12, 0.85);
+    box-shadow: 0 0 20px rgba(var(--accent-rgb, 212, 175, 55), 0.15),
+        inset 0 0 20px rgba(var(--accent-rgb, 212, 175, 55), 0.05);
+}
+
+.car-selector-thumb {
+    width: 56px;
+    height: 38px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    transition: border-color 0.4s;
+}
+
+.car-selector-item.active .car-selector-thumb {
+    border-color: var(--accent);
+}
+
+.car-selector-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) saturate(0.8);
+    transition: filter 0.4s;
+}
+
+.car-selector-item.active .car-selector-thumb img,
+.car-selector-item:hover .car-selector-thumb img {
+    filter: brightness(0.85) saturate(1);
+}
+
+.car-selector-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+    min-width: 80px;
+}
+
+.car-selector-name {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: color 0.4s;
+    letter-spacing: -0.3px;
+}
+
+.car-selector-item.active .car-selector-name {
+    color: var(--text-primary);
+}
+
+.car-selector-type {
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    transition: color 0.4s;
+}
+
+.car-selector-item.active .car-selector-type {
+    color: var(--accent);
+}
+
+.car-selector-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: all 0.4s;
+    margin-left: auto;
+}
+
+.car-selector-item.active .car-selector-dot {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+}
+
+/* Showcase crossfade transition */
+.showcase-car-img.crossfade-out {
+    animation: showcaseFadeOut 0.4s var(--ease-out) forwards;
+}
+
+.showcase-car-img.crossfade-in {
+    animation: showcaseFadeIn 0.5s var(--ease-out) forwards;
+}
+
+@keyframes showcaseFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes showcaseFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* HUD text crossfade */
+.shud-title.crossfade,
+.shud-subtitle.crossfade {
+    animation: hudTextSwap 0.5s var(--ease-out);
+}
+
+@keyframes hudTextSwap {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.shud-data-value.crossfade {
+    animation: hudDataSwap 0.4s var(--ease-out);
+}
+
+@keyframes hudDataSwap {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .showcase-section {
@@ -1337,6 +1539,39 @@ body.cursor-hover .cursor-ring {
     .shud-bracket-br {
         bottom: 16px;
         right: 16px;
+    }
+
+    .car-selector {
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: 24px;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .car-selector-track {
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .car-selector-line {
+        display: none;
+    }
+
+    .car-selector-item {
+        min-width: auto;
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .car-selector-info {
+        display: none;
+    }
+
+    .car-selector-thumb {
+        width: 40px;
+        height: 28px;
     }
 }
 
