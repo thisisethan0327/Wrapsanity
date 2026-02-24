@@ -1,125 +1,169 @@
 /* ============================================
-   EMWRAPS — Subpage Shared JavaScript
+   EMWRAPS — Subpage Shared JS
+   Matches PPF/Fleet animation system exactly
    Used by: vinyl.html, itasha.html, aftermarket.html, ceramic.html
    ============================================ */
 
-(function () {
-    'use strict';
+// =========================================
+// CUSTOM CURSOR
+// =========================================
+const cursor = document.getElementById('cursor');
+const cursorDot = cursor.querySelector('.cursor-dot');
+const cursorRing = cursor.querySelector('.cursor-ring');
+let cursorX = 0, cursorY = 0;
+let cursorTargetX = 0, cursorTargetY = 0;
 
-    /* ---- Custom Cursor ---- */
-    const cursor = document.getElementById('cursor');
-    if (cursor && window.matchMedia('(pointer:fine)').matches) {
-        const dot = cursor.querySelector('.cursor-dot');
-        const ring = cursor.querySelector('.cursor-ring');
-        let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', (e) => {
+    cursorTargetX = e.clientX;
+    cursorTargetY = e.clientY;
+});
 
-        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function updateCursor() {
+    cursorX += (cursorTargetX - cursorX) * 0.15;
+    cursorY += (cursorTargetY - cursorY) * 0.15;
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+    requestAnimationFrame(updateCursor);
+}
+updateCursor();
 
-        (function moveCursor() {
-            cx += (mx - cx) * 0.15;
-            cy += (my - cy) * 0.15;
-            if (dot) { dot.style.transform = `translate(${mx}px, ${my}px)`; }
-            if (ring) { ring.style.transform = `translate(${cx}px, ${cy}px)`; }
-            requestAnimationFrame(moveCursor);
-        })();
+// Hover effects — include all interactive + card elements
+const hoverTargets = document.querySelectorAll('a, button, .sub-benefit-card, .sub-service-card, .sub-package-card, .sub-faq-question, .sub-gallery-item');
+hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
 
-        // Hover states
-        const hoverTargets = 'a, button, .sub-gallery-item, .sub-service-card, .sub-package-card, .sub-faq-question';
-        document.querySelectorAll(hoverTargets).forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
-        });
-    }
+// =========================================
+// NAVBAR
+// =========================================
+const navbar = document.getElementById('navbar');
 
-    /* ---- Navbar ---- */
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const y = window.scrollY;
-        if (navbar) {
-            navbar.classList.toggle('scrolled', y > 50);
-            navbar.classList.toggle('nav-hidden', y > lastScroll && y > 200);
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Active nav link
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
         }
-        lastScroll = y;
-    }, { passive: true });
-
-    /* ---- Mobile Menu ---- */
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
-        });
-        mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            });
-        });
-    }
-
-    /* ---- Scroll Animations ---- */
-    const animateEls = document.querySelectorAll('[data-animate]');
-    if ('IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = parseInt(entry.target.dataset.delay || 0);
-                    setTimeout(() => entry.target.classList.add('animated'), delay);
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-        animateEls.forEach(el => obs.observe(el));
-    } else {
-        animateEls.forEach(el => el.classList.add('animated'));
-    }
-
-    /* ---- FAQ Accordion ---- */
-    document.querySelectorAll('.sub-faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.sub-faq-item');
-            const isActive = item.classList.contains('active');
-
-            // Close others
-            document.querySelectorAll('.sub-faq-item.active').forEach(other => {
-                if (other !== item) other.classList.remove('active');
-            });
-
-            item.classList.toggle('active', !isActive);
-        });
     });
+}, { rootMargin: '-40% 0px -40% 0px' });
 
-    /* ---- Smooth Scroll ---- */
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', e => {
-            const id = link.getAttribute('href');
-            if (id === '#') return;
-            const target = document.querySelector(id);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+sections.forEach(s => sectionObs.observe(s));
+
+// =========================================
+// MOBILE MENU
+// =========================================
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+});
+
+mobileLinks.forEach(l => {
+    l.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// =========================================
+// HERO WORD REVEAL (on load)
+// =========================================
+function animateHeroWords() {
+    const words = document.querySelectorAll('.title-word');
+    words.forEach((word, i) => {
+        setTimeout(() => {
+            word.classList.add('visible');
+        }, i * 120 + 200);
+    });
+}
+
+window.addEventListener('load', () => {
+    setTimeout(animateHeroWords, 300);
+});
+
+// =========================================
+// SCROLL REVEAL ANIMATIONS
+// =========================================
+const animEls = document.querySelectorAll('[data-animate="reveal"]');
+
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const delay = parseInt(entry.target.dataset.delay) || 0;
+            setTimeout(() => entry.target.classList.add('animated'), delay);
+            revealObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+animEls.forEach(el => revealObs.observe(el));
+
+// =========================================
+// COUNTER ANIMATION (telemetry stats)
+// =========================================
+const counters = document.querySelectorAll('.tele-value[data-count]');
+
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = parseInt(entry.target.dataset.count);
+            const duration = 2500;
+            const start = performance.now();
+
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 4);
+                entry.target.textContent = Math.floor(target * eased).toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+                else entry.target.textContent = target.toLocaleString();
             }
-        });
+
+            requestAnimationFrame(tick);
+            counterObs.unobserve(entry.target);
+        }
     });
+}, { threshold: 0.5 });
 
-    /* ---- Active Nav Highlighting ---- */
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link[data-section]');
-    if (sections.length && navLinks.length) {
-        const navObs = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.dataset.section === entry.target.id);
-                    });
-                }
-            });
-        }, { threshold: 0.3 });
-        sections.forEach(sec => navObs.observe(sec));
-    }
+counters.forEach(c => counterObs.observe(c));
 
-})();
+// =========================================
+// FAQ ACCORDION
+// =========================================
+const faqItems = document.querySelectorAll('.sub-faq-item');
+
+faqItems.forEach(item => {
+    const btn = item.querySelector('.sub-faq-question');
+    btn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        // Close all others
+        faqItems.forEach(i => i.classList.remove('active'));
+        // Toggle current
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// =========================================
+// SMOOTH SCROLL
+// =========================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});

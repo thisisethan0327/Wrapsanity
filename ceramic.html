@@ -72,7 +72,8 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="ceramic-hero" class="section hero-section sub-hero-section">
+    <section id="ceramic-hero" class="section hero-section"
+        style="background: linear-gradient(180deg, var(--bg-void) 0%, var(--bg-secondary) 100%);">
         <div class="hero-content">
             <div class="hero-tag" data-animate="reveal">
                 <span class="tag-line"></span>
@@ -89,15 +90,48 @@
                 creating an ultra-slick, hydrophobic barrier with mirror-like depth and clarity.
             </p>
             <div class="hero-actions" data-animate="reveal" data-delay="800">
-                <a href="index.html#contact" class="btn-primary">
+                <a href="index.html#contact" class="btn btn-primary">
                     <span class="btn-text">Protect Your Paint</span>
-                    <span class="btn-icon">→</span>
+                    <span class="btn-arrow">→</span>
+                    <span class="btn-bg"></span>
+                </a>
+                <a href="#ceramic-packages" class="btn btn-ghost">
+                    <span class="btn-text">View Packages</span>
+                    <span class="btn-arrow">↓</span>
                 </a>
             </div>
+            <!-- Ceramic Stats -->
+            <div class="hero-telemetry" data-animate="reveal" data-delay="1000">
+                <div class="telemetry-item">
+                    <span class="tele-label mono">HARDNESS</span>
+                    <span class="tele-value" data-count="9">0</span>
+                    <span class="tele-suffix">H</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">UV BLOCK</span>
+                    <span class="tele-value" data-count="99">0</span>
+                    <span class="tele-suffix">%</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">PROTECTION</span>
+                    <span class="tele-value" data-count="7">0</span>
+                    <span class="tele-suffix">YR</span>
+                </div>
+                <div class="telemetry-divider"></div>
+                <div class="telemetry-item">
+                    <span class="tele-label mono">GLOSS</span>
+                    <span class="tele-value" data-count="100">0</span>
+                    <span class="tele-suffix">%</span>
+                </div>
+            </div>
         </div>
-        <div class="hero-scroll-indicator">
-            <div class="scroll-line"></div>
-            <span class="scroll-text mono">SCROLL</span>
+        <div class="scroll-indicator" data-animate="reveal" data-delay="1200">
+            <div class="scroll-line">
+                <div class="scroll-dot"></div>
+            </div>
+            <span class="mono">SCROLL</span>
         </div>
     </section>
 
@@ -115,6 +149,8 @@
             </div>
             <div class="sub-services-grid">
                 <div class="sub-service-card" data-animate="reveal" data-delay="0">
+                    <div class="card-index mono">01</div>
+                    <div class="card-line"></div>
                     <div class="sub-service-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -131,6 +167,8 @@
                     </ul>
                 </div>
                 <div class="sub-service-card" data-animate="reveal" data-delay="100">
+                    <div class="card-index mono">02</div>
+                    <div class="card-line"></div>
                     <div class="sub-service-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -147,6 +185,8 @@
                     </ul>
                 </div>
                 <div class="sub-service-card" data-animate="reveal" data-delay="200">
+                    <div class="card-index mono">03</div>
+                    <div class="card-line"></div>
                     <div class="sub-service-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -169,6 +209,8 @@
                     </ul>
                 </div>
                 <div class="sub-service-card" data-animate="reveal" data-delay="300">
+                    <div class="card-index mono">04</div>
+                    <div class="card-line"></div>
                     <div class="sub-service-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -213,7 +255,10 @@
                         <li>24-hour cure time</li>
                         <li>1-year warranty</li>
                     </ul>
-                    <a href="index.html#contact" class="sub-package-cta">Get Quote →</a>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
                 </div>
                 <div class="sub-package-card sub-package-card--featured" data-animate="reveal" data-delay="100">
                     <div class="sub-package-badge mono">MOST POPULAR</div>
@@ -228,7 +273,11 @@
                         <li>48-hour cure time</li>
                         <li>Up to 5-year warranty</li>
                     </ul>
-                    <a href="index.html#contact" class="sub-package-cta">Get Quote →</a>
+                    <a href="index.html#contact" class="btn btn-primary btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
+                    </a>
                 </div>
                 <div class="sub-package-card" data-animate="reveal" data-delay="200">
                     <div class="sub-package-tier mono">ULTIMATE</div>
@@ -243,7 +292,10 @@
                         <li>72-hour cure time</li>
                         <li>7+ year warranty</li>
                     </ul>
-                    <a href="index.html#contact" class="sub-package-cta">Get Quote →</a>
+                    <a href="index.html#contact" class="btn btn-ghost btn-full">
+                        <span class="btn-text">Get Quote</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -310,20 +362,22 @@
     </section>
 
     <!-- CTA Section -->
-    <section id="ceramic-cta" class="section sub-cta-section">
+    <section class="section sub-cta-section">
         <div class="container">
             <div class="sub-cta-content" data-animate="reveal">
-                <div class="sub-cta-glow"></div>
-                <span class="sub-cta-tag mono">PROTECT YOUR INVESTMENT</span>
-                <h2 class="sub-cta-title">Get That <span class="accent">Showroom Glow</span></h2>
-                <p class="sub-cta-desc">Professional ceramic coating that makes your vehicle look freshly detailed
+                <h2 class="section-title">Ready To <span class="accent">Protect?</span></h2>
+                <p class="section-desc">Professional ceramic coating that makes your vehicle look freshly detailed
                     every single day. Rain, dust, and grime just slide right off.</p>
                 <div class="sub-cta-actions">
-                    <a href="index.html#contact" class="btn-primary">
+                    <a href="index.html#contact" class="btn btn-primary">
                         <span class="btn-text">Book Your Coating</span>
-                        <span class="btn-icon">→</span>
+                        <span class="btn-arrow">→</span>
+                        <span class="btn-bg"></span>
                     </a>
-                    <a href="tel:+19713193878" class="btn-secondary mono">(971) 319-3878</a>
+                    <a href="tel:2063835328" class="btn btn-ghost">
+                        <span class="btn-text">(206)-383-5328</span>
+                        <span class="btn-arrow">☎</span>
+                    </a>
                 </div>
             </div>
         </div>
