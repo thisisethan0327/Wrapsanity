@@ -26,7 +26,7 @@ function updateCursor() {
 updateCursor();
 
 // Hover effects for interactive elements
-const hoverTargets = document.querySelectorAll('a, button, input, textarea, select, .service-card, .gallery-item, .filter-btn, .slider-btn, .social-link');
+const hoverTargets = document.querySelectorAll('a, button, input, textarea, select, .service-card, .gallery-item, .gallery-showcase-item, .filter-btn, .slider-btn, .social-link');
 hoverTargets.forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
@@ -488,7 +488,7 @@ counters.forEach(c => counterObs.observe(c));
 // GALLERY FILTER
 // =========================================
 const filterBtns = document.querySelectorAll('.filter-btn');
-const galleryItems = document.querySelectorAll('.gallery-item');
+const galleryItems = document.querySelectorAll('.gallery-showcase-item');
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
