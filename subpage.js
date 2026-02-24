@@ -158,6 +158,171 @@ faqItems.forEach(item => {
 });
 
 // =========================================
+// SHOWCASE SCROLL ANIMATION (generic — works on any subpage)
+// =========================================
+(function () {
+    const section = document.querySelector('.showcase-section');
+    if (!section) return;
+
+    const carImg = document.getElementById('showcase-car');
+    const detailImg = document.getElementById('showcase-detail-img');
+    const detailEl = document.getElementById('showcase-detail');
+    const topLeft = section.querySelector('.shud-top-left');
+    const center = section.querySelector('.shud-center');
+    const dataStrip = document.getElementById('shud-data');
+    const brackets = section.querySelectorAll('.shud-bracket');
+    const progressBar = document.getElementById('showcase-progress-bar');
+    const carSelector = document.getElementById('car-selector');
+    const selectorItems = document.querySelectorAll('.car-selector-item');
+
+    // HUD value elements
+    const hudTitle = document.getElementById('shud-title');
+    const hudSubtitle = document.getElementById('shud-subtitle');
+    const hudMaterial = document.getElementById('shud-material');
+    const hudCoverage = document.getElementById('shud-coverage');
+    const hudFinish = document.getElementById('shud-finish');
+    const hudWarranty = document.getElementById('shud-warranty');
+
+    let currentIndex = 0;
+    let isTransitioning = false;
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+    // --- Car Selector: switch cars on click ---
+    selectorItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const newIndex = parseInt(item.dataset.index);
+            if (newIndex === currentIndex || isTransitioning) return;
+
+            isTransitioning = true;
+            currentIndex = newIndex;
+
+            selectorItems.forEach(s => s.classList.remove('active'));
+            item.classList.add('active');
+
+            carImg.classList.add('crossfade-out');
+
+            setTimeout(() => {
+                carImg.src = item.dataset.main;
+                carImg.alt = item.dataset.title + ' by EMWRAPS';
+                carImg.classList.remove('crossfade-out');
+                carImg.classList.add('crossfade-in');
+
+                if (detailImg) detailImg.src = item.dataset.detail;
+
+                if (hudTitle) {
+                    hudTitle.textContent = item.dataset.title;
+                    hudTitle.classList.add('crossfade');
+                }
+                if (hudSubtitle) {
+                    hudSubtitle.textContent = item.dataset.subtitle;
+                    hudSubtitle.classList.add('crossfade');
+                }
+
+                const updates = [
+                    [hudMaterial, item.dataset.material],
+                    [hudCoverage, item.dataset.coverage],
+                    [hudFinish, item.dataset.finish],
+                    [hudWarranty, item.dataset.warranty]
+                ];
+                updates.forEach(([el, val]) => {
+                    if (el) {
+                        el.textContent = val;
+                        el.classList.add('crossfade');
+                    }
+                });
+
+                setTimeout(() => {
+                    carImg.classList.remove('crossfade-in');
+                    if (hudTitle) hudTitle.classList.remove('crossfade');
+                    if (hudSubtitle) hudSubtitle.classList.remove('crossfade');
+                    updates.forEach(([el]) => { if (el) el.classList.remove('crossfade'); });
+                    isTransitioning = false;
+                }, 500);
+            }, 400);
+        });
+    });
+
+    // --- Scroll-driven animation ---
+    function updateShowcase() {
+        const rect = section.getBoundingClientRect();
+        const sectionHeight = section.offsetHeight;
+        const viewHeight = window.innerHeight;
+
+        const scrolled = -rect.top / (sectionHeight - viewHeight);
+        const progress = clamp(scrolled, 0, 1);
+
+        if (progressBar) progressBar.style.height = (progress * 100) + '%';
+
+        if (carSelector) carSelector.classList.toggle('visible', progress > 0.3);
+
+        // Phase 1: Car reveal (0% - 25%)
+        if (!isTransitioning) {
+            const carProgress = clamp(progress / 0.25, 0, 1);
+            const carEased = easeOutCubic(carProgress);
+
+            if (carImg) {
+                const scale = 1.15 - (0.15 * carEased);
+                const opacity = 0.15 + (0.85 * carEased);
+                const brightness = 0.5 + (0.35 * carEased);
+                carImg.style.transform = `scale(${scale})`;
+                carImg.style.opacity = opacity;
+                carImg.style.filter = `brightness(${brightness}) contrast(1.1)`;
+            }
+        }
+
+        // Phase 2: HUD elements (20% - 45%)
+        const hudProgress = clamp((progress - 0.2) / 0.25, 0, 1);
+        const hudEased = easeOutCubic(hudProgress);
+
+        if (topLeft) {
+            topLeft.style.opacity = hudEased;
+            topLeft.style.transform = `translateX(${-20 * (1 - hudEased)}px)`;
+        }
+
+        const titleProgress = clamp((progress - 0.25) / 0.25, 0, 1);
+        const titleEased = easeOutCubic(titleProgress);
+
+        if (center) {
+            center.style.opacity = titleEased;
+            center.style.transform = `translateY(${30 * (1 - titleEased)}px)`;
+        }
+
+        const bracketProgress = clamp((progress - 0.3) / 0.2, 0, 1);
+        brackets.forEach(b => { b.style.opacity = bracketProgress * 0.5; });
+
+        // Phase 3: Data strip + Detail (40% - 65%)
+        const dataProgress = clamp((progress - 0.4) / 0.25, 0, 1);
+        const dataEased = easeOutCubic(dataProgress);
+
+        if (dataStrip) {
+            dataStrip.style.opacity = dataEased;
+            dataStrip.style.transform = `translateY(${20 * (1 - dataEased)}px)`;
+        }
+
+        const detailProgress = clamp((progress - 0.45) / 0.25, 0, 1);
+        const detailEased = easeOutCubic(detailProgress);
+
+        if (detailEl) {
+            detailEl.style.opacity = detailEased;
+            detailEl.style.transform = `translateX(${40 * (1 - detailEased)}px)`;
+        }
+
+        // Phase 4: Final brightness punch (65% - 100%)
+        if (carImg && progress > 0.65 && !isTransitioning) {
+            const punchProgress = clamp((progress - 0.65) / 0.35, 0, 1);
+            const finalBrightness = 0.85 + (0.1 * punchProgress);
+            carImg.style.filter = `brightness(${finalBrightness}) contrast(1.1)`;
+        }
+
+        requestAnimationFrame(updateShowcase);
+    }
+
+    requestAnimationFrame(updateShowcase);
+})();
+
+// =========================================
 // SMOOTH SCROLL
 // =========================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
