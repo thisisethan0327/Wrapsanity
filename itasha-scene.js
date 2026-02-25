@@ -28,11 +28,13 @@
     const imgParticleGroup = new THREE.Group();
     scene.add(imgParticleGroup);
 
-    const textureLoader = new THREE.TextureLoader();
     // We load the image via an off-screen canvas to sample pixel data
     const img = new Image();
-    img.crossOrigin = 'anonymous';
     img.src = 'img/itasha/BMW_340i_Miku/emwraps_1763156665_3765953525617718466_5673697168_BME .jpg';
+
+    img.onerror = function () {
+        console.warn('Itasha scene: image failed to load, continuing with ambient particles only.');
+    };
 
     img.onload = function () {
         const sampleCanvas = document.createElement('canvas');
@@ -45,7 +47,13 @@
         sampleCanvas.height = sampleH;
         ctx.drawImage(img, 0, 0, sampleW, sampleH);
 
-        const imageData = ctx.getImageData(0, 0, sampleW, sampleH);
+        let imageData;
+        try {
+            imageData = ctx.getImageData(0, 0, sampleW, sampleH);
+        } catch (e) {
+            console.warn('Itasha scene: cannot read image pixels (CORS), continuing with ambient particles only.');
+            return;
+        }
         const data = imageData.data;
 
         // Sample every Nth pixel, skip dark pixels
