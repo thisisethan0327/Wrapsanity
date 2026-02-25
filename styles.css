@@ -2633,6 +2633,15 @@ body.cursor-hover .cursor-ring {
     min-height: 100px;
 }
 
+.form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+}
+
 /* ============================================
    Footer
    ============================================ */

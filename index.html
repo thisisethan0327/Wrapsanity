@@ -1459,22 +1459,39 @@
                                 <input type="tel" id="phone" name="phone" placeholder="(206) 555-1234">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="service" class="mono">SERVICE NEEDED</label>
-                            <select id="service" name="service" required>
-                                <option value="" disabled selected>Select a service</option>
-                                <option value="vinyl">Vinyl Wraps</option>
-                                <option value="ppf">Paint Protection Film</option>
-                                <option value="itasha">Itasha</option>
-                                <option value="fleet">Fleet Wraps</option>
-                                <option value="ceramic">Ceramic Coating</option>
-                                <option value="aftermarket">Aftermarket Installs</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicle" class="mono">VEHICLE (YEAR / MAKE / MODEL)</label>
+                                <input type="text" id="vehicle" name="vehicle" placeholder="2024 BMW M4">
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicle-color" class="mono">CURRENT COLOR</label>
+                                <input type="text" id="vehicle-color" name="vehicle_color" placeholder="Alpine White">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="service" class="mono">SERVICE NEEDED</label>
+                                <select id="service" name="service" required>
+                                    <option value="" disabled selected>Select a service</option>
+                                    <option value="vinyl">Vinyl Wraps</option>
+                                    <option value="ppf">Paint Protection Film</option>
+                                    <option value="itasha">Itasha</option>
+                                    <option value="fleet">Fleet Wraps</option>
+                                    <option value="ceramic">Ceramic Coating</option>
+                                    <option value="aftermarket">Aftermarket Installs</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="preferred-date" class="mono">PREFERRED SERVICE DATE</label>
+                                <input type="date" id="preferred-date" name="preferred_date">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="message" class="mono">PROJECT DETAILS</label>
-                            <textarea id="message" name="message" rows="4"
-                                placeholder="Describe your vehicle, desired wrap style, and any specific requirements..."
+                            <textarea id="message" name="message" rows="5"
+                                placeholder="Describe your desired wrap style, color preferences, coverage areas (full wrap, partial, accents), and any specific requirements or inspiration images..."
                                 required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
