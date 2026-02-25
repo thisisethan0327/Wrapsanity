@@ -2510,6 +2510,8 @@ body.cursor-hover .cursor-ring {
     height: 400px;
     filter: invert(0.9) hue-rotate(180deg) saturate(0.3) brightness(0.8);
     transition: filter 0.5s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-map-frame:hover iframe {
@@ -2521,7 +2523,7 @@ body.cursor-hover .cursor-ring {
     position: absolute;
     width: 20px;
     height: 20px;
-    z-index: 2;
+    z-index: 10;
     pointer-events: none;
 }
 
