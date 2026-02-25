@@ -2507,52 +2507,34 @@ body.cursor-hover .cursor-ring {
 .contact-map-frame iframe {
     display: block;
     width: 100%;
-    height: 400px;
+    height: 300px;
     filter: invert(0.9) hue-rotate(180deg) saturate(0.3) brightness(0.8);
     transition: filter 0.5s ease;
-    position: relative;
-    z-index: 1;
 }
 
 .contact-map-frame:hover iframe {
     filter: invert(0.9) hue-rotate(180deg) saturate(0.6) brightness(0.9);
 }
 
-/* Map HUD Brackets */
-.map-bracket {
+/* Map HUD Overlay — draws all 4 corner brackets via CSS gradients */
+.map-hud-overlay {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    z-index: 10;
+    inset: 0;
+    z-index: 9999;
     pointer-events: none;
-}
-
-.map-bracket-tl {
-    top: 8px;
-    left: 8px;
-    border-top: 1px solid var(--accent);
-    border-left: 1px solid var(--accent);
-}
-
-.map-bracket-tr {
-    top: 8px;
-    right: 8px;
-    border-top: 1px solid var(--accent);
-    border-right: 1px solid var(--accent);
-}
-
-.map-bracket-bl {
-    bottom: 8px;
-    left: 8px;
-    border-bottom: 1px solid var(--accent);
-    border-left: 1px solid var(--accent);
-}
-
-.map-bracket-br {
-    bottom: 8px;
-    right: 8px;
-    border-bottom: 1px solid var(--accent);
-    border-right: 1px solid var(--accent);
+    background:
+        /* Top-left corner */
+        linear-gradient(var(--accent), var(--accent)) 8px 8px / 20px 1px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) 8px 8px / 1px 20px no-repeat,
+        /* Top-right corner */
+        linear-gradient(var(--accent), var(--accent)) right 8px top 8px / 20px 1px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) right 8px top 8px / 1px 20px no-repeat,
+        /* Bottom-left corner */
+        linear-gradient(var(--accent), var(--accent)) 8px bottom 8px / 20px 1px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) 8px bottom 8px / 1px 20px no-repeat,
+        /* Bottom-right corner */
+        linear-gradient(var(--accent), var(--accent)) right 8px bottom 8px / 20px 1px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) right 8px bottom 8px / 1px 20px no-repeat;
 }
 
 .btn-sm {
