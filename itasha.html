@@ -79,6 +79,9 @@
         <div class="cursor-ring"></div>
     </div>
 
+    <!-- Three.js Canvas -->
+    <canvas id="itasha-canvas"></canvas>
+
     <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
     <div class="scanline"></div>
@@ -131,7 +134,7 @@
 
     <!-- Hero Section -->
     <section id="itasha-hero" class="section hero-section"
-        style="background: linear-gradient(180deg, var(--bg-void) 0%, var(--bg-secondary) 100%);">
+        style="background: linear-gradient(180deg, var(--bg-void) 0%, rgba(10,10,14,0.85) 50%, var(--bg-secondary) 100%); position: relative; z-index: 3;">
         <div class="hero-content">
             <div class="hero-tag" data-animate="reveal">
                 <span class="tag-line"></span>
@@ -584,7 +587,7 @@
                         <span class="logo-text">EMWRAPS</span>
                         <span class="logo-bracket">]</span>
                     </a>
-                    <p class="footer-tagline">Transforming vehicles into masterpieces since 2011.</p>
+                    <p class="footer-tagline">Transforming vehicles into masterpieces since 2016.</p>
                 </div>
                 <div class="footer-links-group">
                     <h4 class="mono">SERVICES</h4>
@@ -624,6 +627,8 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="itasha-scene.js"></script>
     <script src="subpage.js"></script>
 </body>
 

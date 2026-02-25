@@ -152,7 +152,8 @@ body.cursor-hover .cursor-ring {
 /* ============================================
    Three.js Canvas
    ============================================ */
-#three-canvas {
+#three-canvas,
+#itasha-canvas {
     position: fixed;
     top: 0;
     left: 0;
