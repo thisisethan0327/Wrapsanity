@@ -1,0 +1,14 @@
+# EMWRAPS — robots.txt
+# https://emwraps.net
+
+User-agent: *
+Allow: /
+
+# Block non-content directories
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /.agent/
+
+# Sitemap location
+Sitemap: https://emwraps.net/sitemap.xml

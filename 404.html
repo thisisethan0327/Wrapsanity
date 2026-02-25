@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — EMWRAPS Seattle</title>
+    <meta name="description"
+        content="The page you're looking for doesn't exist. Navigate back to EMWRAPS — Seattle's #1 vehicle wrap shop.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="icon" type="image/png" href="img/logo/icon.png">
+    <link rel="apple-touch-icon" href="img/logo/icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle background noise */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .error-container {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(80px, 20vw, 180px);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff4444, #ff6b6b, #cc0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 16px;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            92%,
+            100% {
+                transform: none;
+                opacity: 1;
+            }
+
+            93% {
+                transform: translate(-2px, 1px);
+                opacity: 0.8;
+            }
+
+            94% {
+                transform: translate(2px, -1px);
+                opacity: 0.9;
+            }
+
+            95% {
+                transform: translate(-1px, 2px);
+                opacity: 0.8;
+            }
+
+            96% {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        .error-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .error-tag::before,
+        .error-tag::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(255, 68, 68, 0.4);
+        }
+
+        .error-title {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .error-desc {
+            font-size: 16px;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .error-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+
+        .error-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .error-link:hover {
+            border-color: #ff4444;
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .error-link--primary {
+            background: #ff4444;
+            border-color: #ff4444;
+            color: #fff;
+        }
+
+        .error-link--primary:hover {
+            background: #cc0000;
+            border-color: #cc0000;
+            color: #fff;
+        }
+
+        .error-services {
+            margin-top: 32px;
+        }
+
+        .error-services h3 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .service-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .service-pill {
+            padding: 6px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            color: #777;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .service-pill:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #e0e0e0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <div class="error-tag">PAGE NOT FOUND</div>
+        <h1 class="error-title">Wrong Turn</h1>
+        <p class="error-desc">
+            The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+        </p>
+        <div class="error-links">
+            <a href="/" class="error-link error-link--primary">← Back to Home</a>
+            <a href="/#contact" class="error-link">Get a Quote</a>
+            <a href="/#gallery" class="error-link">View Portfolio</a>
+        </div>
+        <div class="error-services">
+            <h3>Our Services</h3>
+            <div class="service-pills">
+                <a href="/vinyl.html" class="service-pill">Vinyl Wraps</a>
+                <a href="/ppf.html" class="service-pill">PPF</a>
+                <a href="/itasha.html" class="service-pill">Itasha</a>
+                <a href="/fleet.html" class="service-pill">Fleet Wraps</a>
+                <a href="/ceramic.html" class="service-pill">Ceramic Coating</a>
+                <a href="/aftermarket.html" class="service-pill">Aftermarket</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

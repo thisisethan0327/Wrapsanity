@@ -45,6 +45,7 @@
         href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 
     <!-- Local Business Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -129,6 +130,40 @@
             "https://www.instagram.com/emwraps/",
             "https://www.yelp.com/biz/emwraps-seattle",
             "https://www.tiktok.com/@emwraps"
+        ]
+    }
+    </script>
+
+    <!-- Site Navigation Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SiteNavigationElement",
+        "name": "Main Navigation",
+        "url": "https://emwraps.net/",
+        "hasPart": [
+            { "@type": "WebPage", "name": "Vinyl Wraps", "url": "https://emwraps.net/vinyl.html" },
+            { "@type": "WebPage", "name": "Paint Protection Film", "url": "https://emwraps.net/ppf.html" },
+            { "@type": "WebPage", "name": "Itasha Wraps", "url": "https://emwraps.net/itasha.html" },
+            { "@type": "WebPage", "name": "Fleet Wraps", "url": "https://emwraps.net/fleet.html" },
+            { "@type": "WebPage", "name": "Ceramic Coating", "url": "https://emwraps.net/ceramic.html" },
+            { "@type": "WebPage", "name": "Aftermarket Parts", "url": "https://emwraps.net/aftermarket.html" }
+        ]
+    }
+    </script>
+
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://emwraps.net/"
+            }
         ]
     }
     </script>
