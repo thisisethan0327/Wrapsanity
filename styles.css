@@ -1488,6 +1488,203 @@ body.cursor-hover .cursor-ring {
     }
 }
 
+/* ============================================
+   Celebrities / VIP Section
+   ============================================ */
+.celebrities-section {
+    background: var(--bg-void);
+    overflow: hidden;
+}
+
+.celebrities-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.celebrities-track {
+    display: flex;
+    gap: 24px;
+    padding: 0 40px 40px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+}
+
+.celebrities-track::-webkit-scrollbar {
+    display: none;
+}
+
+.celebrity-card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s ease;
+    border: 1px solid rgba(232, 168, 69, 0.08);
+}
+
+.celebrity-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(232, 168, 69, 0.12),
+        0 0 30px rgba(232, 168, 69, 0.06);
+    border-color: rgba(232, 168, 69, 0.2);
+}
+
+.celebrity-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.6s ease;
+    filter: brightness(0.85) contrast(1.05);
+}
+
+.celebrity-card:hover img {
+    transform: scale(1.08);
+    filter: brightness(1) contrast(1.1);
+}
+
+.celebrity-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 24px 24px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.95));
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: padding-bottom 0.4s ease;
+}
+
+.celebrity-card:hover .celebrity-card-overlay {
+    padding-bottom: 32px;
+}
+
+.celebrity-team {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.celebrity-team::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+}
+
+.celebrity-name {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.celebrity-position {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.celebrities-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 40px 0;
+}
+
+.celebrities-nav-dot {
+    width: 32px;
+    height: 3px;
+    background: var(--border-subtle);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    border-radius: 2px;
+}
+
+.celebrities-nav-dot.active,
+.celebrities-nav-dot:hover {
+    background: var(--accent-primary);
+    width: 48px;
+}
+
+.celeb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px;
+    background: rgba(232, 168, 69, 0.06);
+    border: 1px solid rgba(232, 168, 69, 0.15);
+    border-radius: 24px;
+    margin-top: 8px;
+    align-self: flex-start;
+}
+
+.celeb-badge-logo {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.celeb-badge-text {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .celebrity-card {
+        flex: 0 0 260px;
+    }
+
+    .celebrities-track {
+        padding: 0 20px 30px;
+        gap: 16px;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .showcase-section {

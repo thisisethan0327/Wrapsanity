@@ -700,3 +700,37 @@ dynStyle.textContent = `
     }
 `;
 document.head.appendChild(dynStyle);
+
+// =========================================
+// CELEBRITIES CAROUSEL NAV
+// =========================================
+(function () {
+    const track = document.getElementById('celebrities-track');
+    if (!track) return;
+    const dots = document.querySelectorAll('.celebrities-nav-dot');
+    const cards = track.querySelectorAll('.celebrity-card');
+
+    // Add cursor hover to celebrity cards
+    cards.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // Click dot → scroll to position
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const idx = parseInt(dot.dataset.index);
+            const cardWidth = cards[0].offsetWidth + 24; // card width + gap
+            track.scrollTo({ left: idx * cardWidth * 2, behavior: 'smooth' });
+        });
+    });
+
+    // Update active dot on scroll
+    track.addEventListener('scroll', () => {
+        const scrollPos = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const progress = scrollPos / maxScroll;
+        const activeIdx = Math.min(Math.floor(progress * dots.length), dots.length - 1);
+        dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+    });
+})();
