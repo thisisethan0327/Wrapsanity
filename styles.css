@@ -978,7 +978,7 @@ body.cursor-hover .cursor-ring {
 .showcase-section {
     position: relative;
     z-index: 3;
-    height: 200vh;
+    height: 250vh;
     background: var(--bg-void);
     overflow-x: hidden;
     overflow-y: visible;
