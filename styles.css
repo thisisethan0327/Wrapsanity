@@ -61,6 +61,7 @@ html {
     scroll-behavior: smooth;
     font-size: 16px;
     cursor: none;
+    overflow-x: hidden;
 }
 
 body {
@@ -678,6 +679,7 @@ body.cursor-hover .cursor-ring {
     position: relative;
     z-index: 3;
     padding: var(--section-padding) 0;
+    overflow: hidden;
 }
 
 .container {
@@ -811,6 +813,7 @@ body.cursor-hover .cursor-ring {
     justify-content: center;
     padding-top: 100px;
     text-align: center;
+    overflow: hidden;
 }
 
 .hero-content {
