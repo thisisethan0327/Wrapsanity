@@ -2715,6 +2715,7 @@ body.cursor-hover .cursor-ring {
 
 .form-group input[type="date"] {
     color-scheme: dark;
+    cursor: pointer;
 }
 
 .form-group input[type="date"]::-webkit-calendar-picker-indicator {

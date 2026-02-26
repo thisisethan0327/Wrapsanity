@@ -769,6 +769,13 @@ const dateInput = document.getElementById('preferred-date');
 if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
+
+    // Make the entire date field clickable to open the picker
+    dateInput.addEventListener('click', function () {
+        if (this.showPicker) {
+            this.showPicker();
+        }
+    });
 }
 
 // =========================================
@@ -779,6 +786,33 @@ const makeSelect = document.getElementById('vehicle-make');
 const modelSelect = document.getElementById('vehicle-model');
 
 if (yearSelect && makeSelect && modelSelect) {
+
+    // Helper: convert a <select> to a text <input> for manual entry
+    function convertToTextInput(selectEl, placeholder) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = selectEl.id;
+        input.name = selectEl.name;
+        input.placeholder = placeholder;
+        selectEl.replaceWith(input);
+        return input;
+    }
+
+    // Helper: fetch with timeout (5s)
+    function fetchWithTimeout(url, ms = 5000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), ms);
+        return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+    }
+
+    // Helper: title-case a make name (e.g. "MERCEDES-BENZ" → "Mercedes-Benz")
+    function titleCase(name) {
+        return name.split(/(?<=[-\s])|(?=[-\s])/).map(part => {
+            if (part === '-' || part === ' ') return part;
+            return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        }).join('');
+    }
+
     // Populate years (current year + 1 down to 1990)
     const currentYear = new Date().getFullYear();
     for (let y = currentYear + 1; y >= 1990; y--) {
@@ -788,96 +822,102 @@ if (yearSelect && makeSelect && modelSelect) {
         yearSelect.appendChild(opt);
     }
 
+    const popularMakes = [
+        'ACURA', 'ALFA ROMEO', 'ASTON MARTIN', 'AUDI', 'BENTLEY', 'BMW', 'BUGATTI',
+        'BUICK', 'CADILLAC', 'CHEVROLET', 'CHRYSLER', 'DODGE', 'FERRARI', 'FIAT',
+        'FISKER', 'FORD', 'GENESIS', 'GMC', 'HONDA', 'HYUNDAI', 'INFINITI', 'JAGUAR',
+        'JEEP', 'KIA', 'KOENIGSEGG', 'LAMBORGHINI', 'LAND ROVER', 'LEXUS', 'LINCOLN',
+        'LOTUS', 'LUCID', 'MASERATI', 'MAYBACH', 'MAZDA', 'MCLAREN', 'MERCEDES-BENZ',
+        'MINI', 'MITSUBISHI', 'NISSAN', 'PAGANI', 'POLESTAR', 'PONTIAC', 'PORSCHE',
+        'RAM', 'RIVIAN', 'ROLLS-ROYCE', 'SAAB', 'SHELBY', 'SMART', 'SUBARU', 'SUZUKI',
+        'TESLA', 'TOYOTA', 'VOLKSWAGEN', 'VOLVO'
+    ];
+
+    // Track current select references (may become inputs on fallback)
+    let currentMakeEl = makeSelect;
+    let currentModelEl = modelSelect;
+
     // When year changes → fetch makes
     yearSelect.addEventListener('change', async () => {
-        makeSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
-        makeSelect.disabled = true;
-        modelSelect.innerHTML = '<option value="" disabled selected>Select make first</option>';
-        modelSelect.disabled = true;
+        // If make was already converted to text input, don't refetch
+        if (currentMakeEl.tagName === 'INPUT') return;
+
+        currentMakeEl.innerHTML = '<option value="" disabled selected>Loading makes...</option>';
+        currentMakeEl.disabled = true;
+        if (currentModelEl.tagName === 'SELECT') {
+            currentModelEl.innerHTML = '<option value="" disabled selected>Select make first</option>';
+            currentModelEl.disabled = true;
+        }
 
         try {
-            const res = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json');
+            const res = await fetchWithTimeout('https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json');
+            if (!res.ok) throw new Error('API response not ok');
             const data = await res.json();
-
-            // Filter to well-known makes for cleaner UX
-            const popularMakes = [
-                'ACURA', 'ALFA ROMEO', 'ASTON MARTIN', 'AUDI', 'BENTLEY', 'BMW', 'BUGATTI',
-                'BUICK', 'CADILLAC', 'CHEVROLET', 'CHRYSLER', 'DODGE', 'FERRARI', 'FIAT',
-                'FISKER', 'FORD', 'GENESIS', 'GMC', 'HONDA', 'HYUNDAI', 'INFINITI', 'JAGUAR',
-                'JEEP', 'KIA', 'KOENIGSEGG', 'LAMBORGHINI', 'LAND ROVER', 'LEXUS', 'LINCOLN',
-                'LOTUS', 'LUCID', 'MASERATI', 'MAYBACH', 'MAZDA', 'MCLAREN', 'MERCEDES-BENZ',
-                'MINI', 'MITSUBISHI', 'NISSAN', 'PAGANI', 'POLESTAR', 'PONTIAC', 'PORSCHE',
-                'RAM', 'RIVIAN', 'ROLLS-ROYCE', 'SAAB', 'SHELBY', 'SMART', 'SUBARU', 'SUZUKI',
-                'TESLA', 'TOYOTA', 'VOLKSWAGEN', 'VOLVO'
-            ];
 
             let makes = data.Results
                 .filter(m => popularMakes.includes(m.MakeName.toUpperCase()))
                 .sort((a, b) => a.MakeName.localeCompare(b.MakeName));
 
-            // If filter returns nothing (API issue), show all sorted
             if (makes.length === 0) {
                 makes = data.Results.sort((a, b) => a.MakeName.localeCompare(b.MakeName));
             }
 
-            makeSelect.innerHTML = '<option value="" disabled selected>Select make</option>';
+            currentMakeEl.innerHTML = '<option value="" disabled selected>Select make</option>';
             makes.forEach(m => {
                 const opt = document.createElement('option');
                 opt.value = m.MakeName;
-                // Title case: "TESLA" → "Tesla"
-                opt.textContent = m.MakeName.charAt(0) + m.MakeName.slice(1).toLowerCase();
-                if (m.MakeName.includes('-') || m.MakeName.includes(' ')) {
-                    opt.textContent = m.MakeName.split(/[-\s]/).map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(m.MakeName.includes('-') ? '-' : ' ');
-                }
-                makeSelect.appendChild(opt);
+                opt.textContent = titleCase(m.MakeName);
+                currentMakeEl.appendChild(opt);
             });
-            makeSelect.disabled = false;
+            currentMakeEl.disabled = false;
         } catch (err) {
-            makeSelect.innerHTML = '<option value="" disabled selected>Type make manually</option>';
-            makeSelect.disabled = false;
-            // Fallback: convert to text input
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.id = 'vehicle-make';
-            input.name = 'vehicle_make';
-            input.placeholder = 'e.g. Tesla';
-            makeSelect.replaceWith(input);
+            // Fallback: convert make & model to text inputs
+            currentMakeEl = convertToTextInput(currentMakeEl, 'e.g. Tesla');
+            currentModelEl = convertToTextInput(currentModelEl, 'e.g. Model 3');
         }
     });
 
-    // When make changes → fetch models
-    makeSelect.addEventListener('change', async () => {
+    // Event delegation for make changes (works even after DOM swap)
+    document.addEventListener('change', async (e) => {
+        if (e.target.id !== 'vehicle-make' || e.target.tagName !== 'SELECT') return;
+
         const year = yearSelect.value;
-        const make = makeSelect.value;
-        modelSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
-        modelSelect.disabled = true;
+        const make = e.target.value;
+
+        if (currentModelEl.tagName === 'INPUT') return;
+
+        currentModelEl.innerHTML = '<option value="" disabled selected>Loading models...</option>';
+        currentModelEl.disabled = true;
 
         try {
-            const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
+            const res = await fetchWithTimeout(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
+            if (!res.ok) throw new Error('API response not ok');
             const data = await res.json();
 
             const models = data.Results.sort((a, b) => a.Model_Name.localeCompare(b.Model_Name));
 
-            modelSelect.innerHTML = '<option value="" disabled selected>Select model</option>';
+            if (models.length === 0) {
+                // No models for this combo — fallback to text
+                currentModelEl = convertToTextInput(currentModelEl, 'e.g. Model 3');
+                return;
+            }
+
+            currentModelEl.innerHTML = '<option value="" disabled selected>Select model</option>';
             models.forEach(m => {
                 const opt = document.createElement('option');
                 opt.value = m.Model_Name;
                 opt.textContent = m.Model_Name;
-                modelSelect.appendChild(opt);
+                currentModelEl.appendChild(opt);
             });
-
-            // If no models returned, allow manual entry
-            if (models.length === 0) {
-                modelSelect.innerHTML = '<option value="" disabled selected>No models found</option>';
-                const otherOpt = document.createElement('option');
-                otherOpt.value = 'other';
-                otherOpt.textContent = 'Other (specify in details)';
-                modelSelect.appendChild(otherOpt);
-            }
-            modelSelect.disabled = false;
+            // Add "Other" option at end
+            const otherOpt = document.createElement('option');
+            otherOpt.value = 'other';
+            otherOpt.textContent = 'Other (specify in details)';
+            currentModelEl.appendChild(otherOpt);
+            currentModelEl.disabled = false;
         } catch (err) {
-            modelSelect.innerHTML = '<option value="" disabled selected>Type model manually</option>';
-            modelSelect.disabled = false;
+            // Fallback: convert model to text input
+            currentModelEl = convertToTextInput(currentModelEl, 'e.g. Model 3');
         }
     });
 }
