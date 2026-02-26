@@ -1,0 +1,361 @@
+/* ============================================
+   EMWRAPS — Booking Page Styles
+   Used by: booking.html
+   Matches EMWRAPS HUD / sci-fi design system
+   ============================================ */
+
+/* ============================================
+   Booking Hero Section
+   ============================================ */
+.booking-hero-section {
+    padding-top: 180px;
+    padding-bottom: 60px;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-hero-section::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.booking-hero-section::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.booking-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.booking-hero-title {
+    font-family: var(--font-heading);
+    font-size: 3.8rem;
+    font-weight: 200;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+}
+
+.booking-hero-desc {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 550px;
+}
+
+/* ============================================
+   Booking Form Section
+   ============================================ */
+.booking-form-section {
+    background: var(--bg-secondary);
+    padding-top: 80px;
+    padding-bottom: 140px;
+}
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* ============================================
+   Booking Sidebar
+   ============================================ */
+.booking-sidebar {
+    position: sticky;
+    top: 120px;
+}
+
+.booking-sidebar-block {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.booking-sidebar-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.booking-sidebar-label {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+.booking-sidebar-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.booking-sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.booking-sidebar-icon {
+    font-size: 0.6rem;
+    color: var(--accent);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-accent);
+    flex-shrink: 0;
+    letter-spacing: 0.08em;
+}
+
+.booking-sidebar-sublabel {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 2px;
+}
+
+.booking-sidebar-value {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+a.booking-sidebar-value {
+    transition: color 0.3s;
+}
+
+a.booking-sidebar-value:hover {
+    color: var(--accent);
+}
+
+.booking-sidebar-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking-hour-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.booking-hour-row .mono {
+    color: var(--text-primary);
+    font-size: 0.7rem;
+}
+
+/* ============================================
+   Booking Form — uses existing form styles from styles.css
+   ============================================ */
+.booking-form-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+}
+
+.booking-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 48px;
+    right: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+/* ============================================
+   SMS Consent Block — A2P 10DLC Required
+   ============================================ */
+.sms-consent-block {
+    margin: 28px 0 32px;
+    padding: 24px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    position: relative;
+}
+
+.sms-consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Hide default checkbox */
+.sms-consent-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Custom checkbox */
+.sms-checkmark {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border: 1px solid var(--border-accent);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease-smooth);
+    position: relative;
+    margin-top: 1px;
+}
+
+.sms-checkmark::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 11px;
+    border: solid var(--accent);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.25s var(--ease-out);
+    position: relative;
+    top: -1px;
+}
+
+.sms-consent-label input[type="checkbox"]:checked~.sms-checkmark {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.sms-consent-label input[type="checkbox"]:checked~.sms-checkmark::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.sms-consent-label:hover .sms-checkmark {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+}
+
+/* Focus state */
+.sms-consent-label input[type="checkbox"]:focus-visible~.sms-checkmark {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Consent text */
+.sms-consent-text {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    flex: 1;
+}
+
+.sms-consent-link {
+    color: var(--accent);
+    border-bottom: 1px solid var(--border-accent);
+    transition: border-color 0.3s, color 0.3s;
+    font-weight: 400;
+}
+
+.sms-consent-link:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+}
+
+/* Error state */
+.sms-consent-error {
+    display: none;
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    color: #ff6b6b;
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+    background: rgba(255, 107, 107, 0.08);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.sms-consent-block.error .sms-consent-error {
+    display: block;
+}
+
+.sms-consent-block.error .sms-checkmark {
+    border-color: #ff6b6b;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 1024px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .booking-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-hero-title {
+        font-size: 2.6rem;
+    }
+
+    .booking-hero-section {
+        padding-top: 140px;
+        padding-bottom: 40px;
+    }
+
+    .booking-form-wrapper {
+        padding: 28px;
+    }
+
+    .booking-form-wrapper::before {
+        left: 28px;
+        right: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-hero-title {
+        font-size: 2rem;
+    }
+
+    .booking-form-wrapper {
+        padding: 20px;
+    }
+
+    .sms-consent-block {
+        padding: 16px;
+    }
+
+    .sms-consent-text {
+        font-size: 0.78rem;
+    }
+}
