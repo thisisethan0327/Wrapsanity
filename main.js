@@ -504,8 +504,35 @@ filterBtns.forEach(btn => {
                 item.classList.add('hidden');
             }
         });
+
+        // Auto-expand when filtering, collapse when "All"
+        const collapse = document.getElementById('gallery-collapse');
+        const toggleBtn = document.getElementById('gallery-toggle');
+        if (filter !== 'all') {
+            collapse.classList.add('expanded');
+            toggleBtn.style.display = 'none';
+        } else {
+            collapse.classList.remove('expanded');
+            toggleBtn.style.display = '';
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            document.getElementById('gallery-toggle-text').textContent = 'See More Projects';
+        }
     });
 });
+
+// =========================================
+// GALLERY SEE MORE TOGGLE
+// =========================================
+const galleryToggle = document.getElementById('gallery-toggle');
+const galleryCollapse = document.getElementById('gallery-collapse');
+
+if (galleryToggle && galleryCollapse) {
+    galleryToggle.addEventListener('click', () => {
+        const isExpanded = galleryCollapse.classList.toggle('expanded');
+        galleryToggle.setAttribute('aria-expanded', isExpanded);
+        document.getElementById('gallery-toggle-text').textContent = isExpanded ? 'Show Less' : 'See More Projects';
+    });
+}
 
 // =========================================
 // TESTIMONIALS SLIDER

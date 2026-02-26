@@ -1981,6 +1981,81 @@ body.cursor-hover .cursor-ring {
     background: var(--accent);
 }
 
+/* Gallery Collapse / See More */
+.gallery-collapse {
+    position: relative;
+    max-height: 700px;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-collapse.expanded {
+    max-height: 6000px;
+}
+
+.gallery-fade-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent 0%, var(--bg-secondary) 90%);
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 0.5s ease;
+}
+
+.gallery-collapse.expanded .gallery-fade-overlay {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gallery-see-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    padding: 24px 0;
+    margin-top: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.gallery-see-more:hover {
+    color: var(--accent);
+}
+
+.see-more-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    transition: background 0.3s ease;
+}
+
+.gallery-see-more:hover .see-more-line {
+    background: var(--border-accent);
+}
+
+.see-more-text {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.see-more-arrow {
+    font-size: 16px;
+    transition: transform 0.4s ease;
+}
+
+.gallery-see-more[aria-expanded="true"] .see-more-arrow {
+    transform: rotate(180deg);
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
