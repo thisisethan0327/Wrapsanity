@@ -2704,6 +2704,15 @@ body.cursor-hover .cursor-ring {
     color: var(--text-primary);
 }
 
+.form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+}
+
 .form-group textarea {
     resize: vertical;
     min-height: 100px;

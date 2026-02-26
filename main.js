@@ -761,3 +761,12 @@ document.head.appendChild(dynStyle);
         dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
     });
 })();
+
+// =========================================
+// DATE PICKER — SET MIN TO TODAY
+// =========================================
+const dateInput = document.getElementById('preferred-date');
+if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+}
