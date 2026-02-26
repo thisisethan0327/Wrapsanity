@@ -598,6 +598,20 @@ contactForm.addEventListener('submit', (e) => {
 });
 
 // =========================================
+// VIP SEE MORE TOGGLE (MOBILE GRID)
+// =========================================
+const celebSeeMore = document.getElementById('celebrities-see-more');
+const celebCollapse = document.getElementById('celebrities-collapse');
+if (celebSeeMore && celebCollapse) {
+    celebSeeMore.addEventListener('click', () => {
+        const isExpanded = celebCollapse.classList.toggle('expanded');
+        celebSeeMore.setAttribute('aria-expanded', isExpanded);
+        const textEl = celebSeeMore.querySelector('.see-more-text');
+        if (textEl) textEl.textContent = isExpanded ? 'Show Less' : 'See More VIPs';
+    });
+}
+
+// =========================================
 // SHOWCASE SCROLL ANIMATION
 // =========================================
 (function () {

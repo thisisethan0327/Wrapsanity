@@ -1677,15 +1677,102 @@ body.cursor-hover .cursor-ring {
     text-transform: uppercase;
 }
 
+/* Hide see-more button on desktop (only visible on mobile) */
+.celebrities-see-more {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .celebrity-card {
-        flex: 0 0 260px;
+        flex: 0 0 auto;
+        aspect-ratio: 3 / 4;
     }
 
     .celebrities-track {
-        padding: 0 20px 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 0 16px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+    }
+
+    .celebrity-card {
+        border-radius: 8px;
+    }
+
+    .celebrity-card-overlay {
+        padding: 20px 12px 12px;
+    }
+
+    .celebrity-name {
+        font-size: 0.95rem;
+    }
+
+    .celebrity-team {
+        font-size: 0.5rem;
+    }
+
+    .celebrity-position {
+        font-size: 0.55rem;
+    }
+
+    /* Collapse: show first 2 rows only */
+    .celebrities-collapse {
+        position: relative;
+        max-height: 420px;
+        overflow: hidden;
+        transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .celebrities-collapse.expanded {
+        max-height: 3000px;
+    }
+
+    .celebrities-fade-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+        background: linear-gradient(to bottom, transparent 0%, var(--bg-void) 90%);
+        pointer-events: none;
+        z-index: 3;
+        transition: opacity 0.5s ease;
+    }
+
+    .celebrities-collapse.expanded .celebrities-fade-overlay {
+        opacity: 0;
+    }
+
+    /* Show see more button */
+    .celebrities-see-more {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 16px;
+        width: 100%;
+        padding: 20px 16px;
+        margin-top: 4px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+    }
+
+    .celebrities-see-more:hover {
+        color: var(--accent);
+    }
+
+    .celebrities-see-more[aria-expanded="true"] .see-more-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Hide nav dots on mobile grid */
+    .celebrities-nav {
+        display: none;
     }
 }
 
