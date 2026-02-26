@@ -982,6 +982,7 @@ body.cursor-hover .cursor-ring {
     /* Reduced for snappier hero → car transition */
     background: var(--bg-void);
     overflow: visible;
+    padding: 0;
 }
 
 .showcase-sticky {
