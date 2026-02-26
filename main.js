@@ -679,9 +679,9 @@ if (celebSeeMore && celebCollapse) {
         const scrolled = -rect.top / (sectionHeight - viewHeight);
         const progress = clamp(scrolled, 0, 1);
         if (progressBar) progressBar.style.height = (progress * 100) + '%';
-        if (carSelector) carSelector.classList.toggle('visible', progress > 0.3);
+        if (carSelector) carSelector.classList.toggle('visible', progress > 0.2);
         if (!isTransitioning) {
-            const carProgress = clamp(progress / 0.25, 0, 1);
+            const carProgress = clamp(progress / 0.2, 0, 1);
             const carEased = easeOutCubic(carProgress);
             if (carImg) {
                 carImg.style.transform = `scale(${1.15 - (0.15 * carEased)})`;
@@ -689,22 +689,22 @@ if (celebSeeMore && celebCollapse) {
                 carImg.style.filter = `brightness(${0.5 + (0.35 * carEased)}) contrast(1.1)`;
             }
         }
-        const hudProgress = clamp((progress - 0.2) / 0.25, 0, 1);
+        const hudProgress = clamp((progress - 0.15) / 0.2, 0, 1);
         const hudEased = easeOutCubic(hudProgress);
         if (topLeft) { topLeft.style.opacity = hudEased; topLeft.style.transform = `translateX(${-20 * (1 - hudEased)}px)`; }
-        const titleProgress = clamp((progress - 0.25) / 0.25, 0, 1);
+        const titleProgress = clamp((progress - 0.2) / 0.2, 0, 1);
         const titleEased = easeOutCubic(titleProgress);
         if (center) { center.style.opacity = titleEased; center.style.transform = `translateY(${30 * (1 - titleEased)}px)`; }
-        const bracketProgress = clamp((progress - 0.3) / 0.2, 0, 1);
+        const bracketProgress = clamp((progress - 0.25) / 0.15, 0, 1);
         brackets.forEach(b => { b.style.opacity = bracketProgress * 0.5; });
-        const dataProgress = clamp((progress - 0.4) / 0.25, 0, 1);
+        const dataProgress = clamp((progress - 0.3) / 0.2, 0, 1);
         const dataEased = easeOutCubic(dataProgress);
         if (dataStrip) { dataStrip.style.opacity = dataEased; dataStrip.style.transform = `translateY(${20 * (1 - dataEased)}px)`; }
-        const detailProgress = clamp((progress - 0.45) / 0.25, 0, 1);
+        const detailProgress = clamp((progress - 0.35) / 0.2, 0, 1);
         const detailEased = easeOutCubic(detailProgress);
         if (detailEl) { detailEl.style.opacity = detailEased; detailEl.style.transform = `translateX(${40 * (1 - detailEased)}px)`; }
-        if (carImg && progress > 0.65 && !isTransitioning) {
-            const punchProgress = clamp((progress - 0.65) / 0.35, 0, 1);
+        if (carImg && progress > 0.5 && !isTransitioning) {
+            const punchProgress = clamp((progress - 0.5) / 0.2, 0, 1);
             carImg.style.filter = `brightness(${0.85 + (0.1 * punchProgress)}) contrast(1.1)`;
         }
         requestAnimationFrame(updateShowcase);

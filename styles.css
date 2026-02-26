@@ -978,7 +978,7 @@ body.cursor-hover .cursor-ring {
 .showcase-section {
     position: relative;
     z-index: 3;
-    height: 180vh;
+    height: 200vh;
     background: var(--bg-void);
     overflow: visible;
     padding: 0;
@@ -1721,7 +1721,7 @@ body.cursor-hover .cursor-ring {
     /* Collapse: show first 2 rows only */
     .celebrities-collapse {
         position: relative;
-        max-height: 680px;
+        max-height: 420px;
         overflow: hidden;
         transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -1779,7 +1779,7 @@ body.cursor-hover .cursor-ring {
 /* Responsive */
 @media (max-width: 768px) {
     .showcase-section {
-        height: 150vh;
+        height: 170vh;
     }
 
     .showcase-hud {
