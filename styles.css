@@ -978,8 +978,7 @@ body.cursor-hover .cursor-ring {
 .showcase-section {
     position: relative;
     z-index: 3;
-    height: 220vh;
-    /* Reduced for snappier hero → car transition */
+    height: 180vh;
     background: var(--bg-void);
     overflow: visible;
     padding: 0;
@@ -1693,7 +1692,7 @@ body.cursor-hover .cursor-ring {
 /* Responsive */
 @media (max-width: 768px) {
     .showcase-section {
-        height: 180vh;
+        height: 150vh;
     }
 
     .showcase-hud {
