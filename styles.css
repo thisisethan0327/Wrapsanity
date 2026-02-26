@@ -981,6 +981,7 @@ body.cursor-hover .cursor-ring {
     height: 250vh;
     background: var(--bg-void);
     overflow-x: clip;
+    overflow-y: visible;
     padding: 0;
 }
 

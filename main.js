@@ -829,7 +829,7 @@ if (yearSelect && makeSelect && modelSelect) {
 
     // Populate years (current year + 1 down to 1990)
     const currentYear = new Date().getFullYear();
-    for (let y = currentYear + 1; y >= 1990; y--) {
+    for (let y = currentYear + 1; y >= 2015; y--) {
         const opt = document.createElement('option');
         opt.value = y;
         opt.textContent = y;
