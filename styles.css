@@ -2653,6 +2653,15 @@ body.cursor-hover .cursor-ring {
     gap: 20px;
 }
 
+.form-row-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-group select:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;

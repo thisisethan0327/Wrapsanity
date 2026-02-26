@@ -770,3 +770,114 @@ if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
 }
+
+// =========================================
+// VEHICLE YEAR / MAKE / MODEL (NHTSA API)
+// =========================================
+const yearSelect = document.getElementById('vehicle-year');
+const makeSelect = document.getElementById('vehicle-make');
+const modelSelect = document.getElementById('vehicle-model');
+
+if (yearSelect && makeSelect && modelSelect) {
+    // Populate years (current year + 1 down to 1990)
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear + 1; y >= 1990; y--) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+    }
+
+    // When year changes → fetch makes
+    yearSelect.addEventListener('change', async () => {
+        makeSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+        makeSelect.disabled = true;
+        modelSelect.innerHTML = '<option value="" disabled selected>Select make first</option>';
+        modelSelect.disabled = true;
+
+        try {
+            const res = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json');
+            const data = await res.json();
+
+            // Filter to well-known makes for cleaner UX
+            const popularMakes = [
+                'ACURA', 'ALFA ROMEO', 'ASTON MARTIN', 'AUDI', 'BENTLEY', 'BMW', 'BUGATTI',
+                'BUICK', 'CADILLAC', 'CHEVROLET', 'CHRYSLER', 'DODGE', 'FERRARI', 'FIAT',
+                'FISKER', 'FORD', 'GENESIS', 'GMC', 'HONDA', 'HYUNDAI', 'INFINITI', 'JAGUAR',
+                'JEEP', 'KIA', 'KOENIGSEGG', 'LAMBORGHINI', 'LAND ROVER', 'LEXUS', 'LINCOLN',
+                'LOTUS', 'LUCID', 'MASERATI', 'MAYBACH', 'MAZDA', 'MCLAREN', 'MERCEDES-BENZ',
+                'MINI', 'MITSUBISHI', 'NISSAN', 'PAGANI', 'POLESTAR', 'PONTIAC', 'PORSCHE',
+                'RAM', 'RIVIAN', 'ROLLS-ROYCE', 'SAAB', 'SHELBY', 'SMART', 'SUBARU', 'SUZUKI',
+                'TESLA', 'TOYOTA', 'VOLKSWAGEN', 'VOLVO'
+            ];
+
+            let makes = data.Results
+                .filter(m => popularMakes.includes(m.MakeName.toUpperCase()))
+                .sort((a, b) => a.MakeName.localeCompare(b.MakeName));
+
+            // If filter returns nothing (API issue), show all sorted
+            if (makes.length === 0) {
+                makes = data.Results.sort((a, b) => a.MakeName.localeCompare(b.MakeName));
+            }
+
+            makeSelect.innerHTML = '<option value="" disabled selected>Select make</option>';
+            makes.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m.MakeName;
+                // Title case: "TESLA" → "Tesla"
+                opt.textContent = m.MakeName.charAt(0) + m.MakeName.slice(1).toLowerCase();
+                if (m.MakeName.includes('-') || m.MakeName.includes(' ')) {
+                    opt.textContent = m.MakeName.split(/[-\s]/).map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(m.MakeName.includes('-') ? '-' : ' ');
+                }
+                makeSelect.appendChild(opt);
+            });
+            makeSelect.disabled = false;
+        } catch (err) {
+            makeSelect.innerHTML = '<option value="" disabled selected>Type make manually</option>';
+            makeSelect.disabled = false;
+            // Fallback: convert to text input
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = 'vehicle-make';
+            input.name = 'vehicle_make';
+            input.placeholder = 'e.g. Tesla';
+            makeSelect.replaceWith(input);
+        }
+    });
+
+    // When make changes → fetch models
+    makeSelect.addEventListener('change', async () => {
+        const year = yearSelect.value;
+        const make = makeSelect.value;
+        modelSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+        modelSelect.disabled = true;
+
+        try {
+            const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
+            const data = await res.json();
+
+            const models = data.Results.sort((a, b) => a.Model_Name.localeCompare(b.Model_Name));
+
+            modelSelect.innerHTML = '<option value="" disabled selected>Select model</option>';
+            models.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m.Model_Name;
+                opt.textContent = m.Model_Name;
+                modelSelect.appendChild(opt);
+            });
+
+            // If no models returned, allow manual entry
+            if (models.length === 0) {
+                modelSelect.innerHTML = '<option value="" disabled selected>No models found</option>';
+                const otherOpt = document.createElement('option');
+                otherOpt.value = 'other';
+                otherOpt.textContent = 'Other (specify in details)';
+                modelSelect.appendChild(otherOpt);
+            }
+            modelSelect.disabled = false;
+        } catch (err) {
+            modelSelect.innerHTML = '<option value="" disabled selected>Type model manually</option>';
+            modelSelect.disabled = false;
+        }
+    });
+}
