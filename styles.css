@@ -980,7 +980,8 @@ body.cursor-hover .cursor-ring {
     z-index: 3;
     height: 200vh;
     background: var(--bg-void);
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: visible;
     padding: 0;
 }
 
